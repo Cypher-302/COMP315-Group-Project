@@ -1,0 +1,271 @@
+# depslib dependency file v1.0
+1771721510 source:c:\users\student\desktop\school\2026\comp315\project\product.cpp
+	<iostream>
+	"Product.h"
+	<string>
+
+1771588943 c:\users\student\desktop\school\2026\comp315\project\product.h
+	<string>
+
+1771876585 source:c:\users\student\desktop\school\2026\comp315\project\testapp\main.cpp
+	<iostream>
+	<ctime>
+	<chrono>
+	<thread>
+	<vector>
+	<string>
+	"include/Product.h"
+	"include/DiscountedProduct.h"
+	"include/TaxableProduct.h"
+
+1771724977 source:c:\users\student\desktop\school\2026\comp315\project\order.cpp
+	<string>
+	"Order.h"
+
+1771718082 c:\users\student\desktop\school\2026\comp315\project\order.h
+	<string>
+
+1771589197 source:c:\users\student\desktop\school\2026\comp315\project\discountedproduct.cpp
+	"DiscountedProduct.h"
+	<iostream>
+	<string>
+
+1771725070 c:\users\student\desktop\school\2026\comp315\project\discountedproduct.h
+	"Product.h"
+	<string>
+
+1771589232 source:c:\users\student\desktop\school\2026\comp315\project\taxableproduct.cpp
+	<string>
+	"TaxableProduct.h"
+	<iostream>
+
+1771725111 c:\users\student\desktop\school\2026\comp315\project\taxableproduct.h
+	"Product.h"
+	<string>
+
+1771743687 source:c:\users\student\desktop\school\2026\comp315\project\testapp\src\discountedproduct.cpp
+	"../include/DiscountedProduct.h"
+	<iostream>
+	<string>
+
+1771744960 c:\users\student\desktop\school\2026\comp315\project\testapp\include\discountedproduct.h
+	"Product.h"
+	<string>
+
+1771874630 c:\users\student\desktop\school\2026\comp315\project\testapp\include\product.h
+	<string>
+
+1771874431 source:c:\users\student\desktop\school\2026\comp315\project\testapp\src\order.cpp
+	<string>
+	"../include/Order.h"
+
+1771718082 c:\users\student\desktop\school\2026\comp315\project\testapp\include\order.h
+	<string>
+
+1771743724 source:c:\users\student\desktop\school\2026\comp315\project\testapp\src\product.cpp
+	<iostream>
+	"../include/Product.h"
+	<string>
+
+1771743724 source:c:\users\student\desktop\school\2026\comp315\project\testapp\src\taxableproduct.cpp
+	<string>
+	"../include/TaxableProduct.h"
+	<iostream>
+
+1771744970 c:\users\student\desktop\school\2026\comp315\project\testapp\include\taxableproduct.h
+	"Product.h"
+	<string>
+
+1772008758 source:c:\users\sithokomele\onedrive - university of kwazulu-natal\desktop\comp315\testapp\src\discountedproduct.cpp
+	"../include/DiscountedProduct.h"
+	<iostream>
+	<string>
+
+1772135706 c:\users\sithokomele\onedrive - university of kwazulu-natal\desktop\comp315\testapp\include\discountedproduct.h
+	"Product.h"
+	<string>
+
+1772135388 c:\users\sithokomele\onedrive - university of kwazulu-natal\desktop\comp315\testapp\include\product.h
+	<string>
+
+1772135458 source:c:\users\sithokomele\onedrive - university of kwazulu-natal\desktop\comp315\testapp\src\order.cpp
+	<string>
+	"../include/Order.h"
+
+1772133935 c:\users\sithokomele\onedrive - university of kwazulu-natal\desktop\comp315\testapp\include\order.h
+	<string>
+
+1772133319 source:c:\users\sithokomele\onedrive - university of kwazulu-natal\desktop\comp315\testapp\src\product.cpp
+	<iostream>
+	"../include/Product.h"
+	<string>
+
+1771877102 source:c:\users\sithokomele\onedrive - university of kwazulu-natal\desktop\comp315\testapp\src\taxableproduct.cpp
+	<string>
+	"../include/TaxableProduct.h"
+	<iostream>
+
+1772135981 c:\users\sithokomele\onedrive - university of kwazulu-natal\desktop\comp315\testapp\include\taxableproduct.h
+	"Product.h"
+	<string>
+
+1771956664 source:c:\users\sithokomele\onedrive - university of kwazulu-natal\desktop\comp315\testapp\main.cpp
+	<iostream>
+	<ctime>
+	<chrono>
+	<thread>
+	<vector>
+	<string>
+	"include/Product.h"
+	"include/DiscountedProduct.h"
+	"include/TaxableProduct.h"
+
+1772136918 source:c:\users\anoth\onedrive\documents\2026 school work\testapp\main.cpp
+	<iostream>
+	<ctime>
+	<chrono>
+	<thread>
+	<vector>
+	<string>
+	"include/Product.h"
+	"include/DiscountedProduct.h"
+	"include/TaxableProduct.h"
+
+1772136919 c:\users\anoth\onedrive\documents\2026 school work\testapp\include\product.h
+	<string>
+
+1772136919 c:\users\anoth\onedrive\documents\2026 school work\testapp\include\discountedproduct.h
+	"Product.h"
+	<string>
+
+1772136919 c:\users\anoth\onedrive\documents\2026 school work\testapp\include\taxableproduct.h
+	"Product.h"
+	<string>
+
+1772136919 source:c:\users\anoth\onedrive\documents\2026 school work\testapp\src\discountedproduct.cpp
+	"../include/DiscountedProduct.h"
+	<iostream>
+	<string>
+
+1772136919 source:c:\users\anoth\onedrive\documents\2026 school work\testapp\src\order.cpp
+	<string>
+	"../include/Order.h"
+
+1772136919 c:\users\anoth\onedrive\documents\2026 school work\testapp\include\order.h
+	<string>
+
+1772136919 source:c:\users\anoth\onedrive\documents\2026 school work\testapp\src\product.cpp
+	<iostream>
+	"../include/Product.h"
+	<string>
+
+1772136919 source:c:\users\anoth\onedrive\documents\2026 school work\testapp\src\taxableproduct.cpp
+	<string>
+	"../include/TaxableProduct.h"
+	<iostream>
+
+1772145790 source:c:\users\student\music\testapp\main.cpp
+	<iostream>
+	<ctime>
+	<chrono>
+	<thread>
+	<vector>
+	<string>
+	"include/Product.h"
+	"include/DiscountedProduct.h"
+	"include/TaxableProduct.h"
+	"include/InventoryManager.h"
+
+1772139958 c:\users\student\music\testapp\include\product.h
+	<string>
+
+1772139958 c:\users\student\music\testapp\include\discountedproduct.h
+	"Product.h"
+	<string>
+
+1772139958 c:\users\student\music\testapp\include\taxableproduct.h
+	"Product.h"
+	<string>
+
+1772139958 source:c:\users\student\music\testapp\src\discountedproduct.cpp
+	"../include/DiscountedProduct.h"
+	<iostream>
+	<string>
+
+1772139958 source:c:\users\student\music\testapp\src\order.cpp
+	<string>
+	"../include/Order.h"
+
+1772139958 c:\users\student\music\testapp\include\order.h
+	<string>
+
+1772139958 source:c:\users\student\music\testapp\src\product.cpp
+	<iostream>
+	"../include/Product.h"
+	<string>
+
+1772139958 source:c:\users\student\music\testapp\src\taxableproduct.cpp
+	<string>
+	"../include/TaxableProduct.h"
+	<iostream>
+
+1772145831 source:c:\users\student\music\testapp\src\inventorymanager.cpp
+	"../include/InventoryManager.h"
+	<iostream>
+
+1772140297 c:\users\student\music\testapp\include\inventorymanager.h
+	<map>
+	<memory>
+	<mutex>
+	"Product.h"
+
+1772470929 source:c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\main.cpp
+	<iostream>
+	<ctime>
+	<chrono>
+	<thread>
+	<vector>
+	<string>
+	"include/Product.h"
+	"include/DiscountedProduct.h"
+	"include/TaxableProduct.h"
+	"include/InventoryManager.h"
+
+1772470929 c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\include\product.h
+	<string>
+
+1772470929 c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\include\discountedproduct.h
+	"Product.h"
+	<string>
+
+1772470929 c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\include\taxableproduct.h
+	"Product.h"
+	<string>
+
+1772470929 c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\include\inventorymanager.h
+	<map>
+	<memory>
+	<mutex>
+	"Product.h"
+
+1772470930 source:c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\src\inventorymanager.cpp
+	"../include/InventoryManager.h"
+	<iostream>
+
+1772470930 source:c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\src\order.cpp
+	<string>
+	"../include/Order.h"
+
+1772470929 c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\include\order.h
+	<string>
+
+1772470930 source:c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\src\product.cpp
+	<iostream>
+	"../include/Product.h"
+	<string>
+
+1772470930 source:c:\users\jebbl\onedrive\university\year 3\semester 1\comp315\project\testapp(updated)\testapp\src\taxableproduct.cpp
+	<string>
+	"../include/TaxableProduct.h"
+	<iostream>
+

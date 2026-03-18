@@ -1,0 +1,71 @@
+#include <iostream>
+#include "../include/Product.h"
+#include <string>
+
+
+
+Product::Product(std::string the_name, double the_price, int id, int the_quantity)
+            :name(the_name), price(the_price), productID(id) ,quantity(the_quantity){
+
+            }
+
+Product::~Product(){}
+
+double Product::getPrice() const{
+    return price;
+}
+
+std::string Product::getName() const {
+    return name;
+}
+
+int Product::getQuant() const{
+    return quantity;
+}
+
+int Product::getId() const{
+    return productID;
+}
+
+void Product:: setName(std::string the_name){
+    name = the_name;
+}
+
+void Product::setQuant(int num){
+    if (num >= 0){
+        quantity = num;
+    }else{
+        std::cout << "Quantity can not be negative" << std::endl;
+    }
+}
+
+
+void Product::setPrice(double pri){
+    if (pri >= 0){
+        price = pri;
+    }else{
+        std::cout << "Price can not be negative" << std::endl;
+    }
+}
+
+
+void Product::setID(int id){
+    if (id >= 0){
+        productID = id;
+    }else{
+        std::cout << "Product ID can not be negative" << std::endl;
+    }
+}
+
+double Product::calculateFinalPrice(){
+    return price;
+}
+
+void Product::display(){
+     std::cout << "ID: " << getId()
+             << ", Name: " << getName()
+             << ", Price: " << getPrice()
+             << ", Quantity: " << getQuant()
+             << ", Final Price: " << calculateFinalPrice() << std::endl;
+}
+
