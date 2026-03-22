@@ -269,3 +269,54 @@
 	"../include/TaxableProduct.h"
 	<iostream>
 
+1774130361 source:c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\main.cpp
+	<iostream>
+	<ctime>
+	<chrono>
+	<thread>
+	<vector>
+	<string>
+	"include/Product.h"
+	"include/DiscountedProduct.h"
+	"include/TaxableProduct.h"
+	"include/InventoryManager.h"
+
+1774130361 c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\include\product.h
+	<string>
+
+1774130361 c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\include\discountedproduct.h
+	"Product.h"
+	<string>
+
+1774130361 c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\include\taxableproduct.h
+	"Product.h"
+	<string>
+
+1774190370 c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\include\inventorymanager.h
+	<map>
+	<memory>
+	<mutex>
+	"Product.h"
+
+1774130361 source:c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\src\discountedproduct.cpp
+	"../include/DiscountedProduct.h"
+	<iostream>
+	<string>
+
+1774130361 source:c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\src\order.cpp
+	<string>
+	"../include/Order.h"
+
+1774130361 c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\include\order.h
+	<string>
+
+1774130361 source:c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\src\product.cpp
+	<iostream>
+	"../include/Product.h"
+	<string>
+
+1774130361 source:c:\users\student\onedrive - university of kwazulu-natal\documents\c++_project\comp315-group-project\src\taxableproduct.cpp
+	<string>
+	"../include/TaxableProduct.h"
+	<iostream>
+

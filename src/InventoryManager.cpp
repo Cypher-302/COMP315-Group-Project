@@ -11,18 +11,61 @@ InventoryManager::InventoryManager(map<int, shared_ptr<Product>> productMap) : p
 /**
   * Adds new product to inventory
   * Thread safe
-  * @param shared pointer to the product object to be added
+  * @param product Shared pointer to the product object to be added
+  * @return True if product is successfully added, false otherwise
 */
-void InventoryManager::addNewProduct(shared_ptr<Product> product) {
+bool InventoryManager::addNewProduct(shared_ptr<Product> product) {
+
+    if(!product) {
+        return false;
+    }
 
     std::lock_guard<std::mutex> lockMap(mapMutex);
 
     int id = product->getId();
     if(productMap.find(id) == productMap.end()) {
-        productMap[id] = product;
-    } else {
-        cout << "Product with this ID already exists" << endl;
+        productMap.insert({id, product});
+        return true;
     }
+
+    return false;
+}
+
+/**
+  * remove product from the inventory by id
+  * @param product id
+  * @return True if product is successfully removed, false otherwise
+*/
+bool InventoryManager::removeProduct(int productId) {
+
+    std::lock_guard<std::mutex> lockMap(mapMutex);
+
+    auto it = productMap.find(productId);
+
+    if(it != productMap.end()) {
+        productMap.erase(it);
+        return true;
+    }
+
+    return false;
+}
+
+/**
+  * searches for a product using productId
+  * @param product id
+  * @return shared pointer to the product object, null pointer otherwise
+*/
+shared_ptr<Product> InventoryManager::searchProductById(int productId) const {
+
+    std::lock_guard<std::mutex> lockMap(mapMutex);
+
+    auto it = productMap.find(productId);
+
+    if(it != productMap.end()) {
+        return it->second;
+    }
+
+    return nullptr;
 }
 
 /**

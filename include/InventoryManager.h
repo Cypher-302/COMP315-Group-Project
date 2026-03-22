@@ -19,25 +19,26 @@ class InventoryManager
         /**
 
           * Adds new product to inventory
-          * @param shared pointer to the product object to be added
-
+          * @param product Shared pointer to the product object to be added
+          * @return True if product is successfully added, false otherwise
         */
-        void addNewProduct(std::shared_ptr<Product> product);
+        bool addNewProduct(std::shared_ptr<Product> product);
 
 
         /**
 
           * remove product from the inventory by id
           * @param product id
+          * @return True if product is successfully removed, false otherwise
 
         */
-        void removeProduct(int productId);
+        bool removeProduct(int productId);
 
         /**
 
           * searches for a product using productId
           * @param product id
-          * @return shared pointer to the product object
+          * @return shared pointer to the product object, null pointer otherwise
 
         */
         std::shared_ptr<Product> searchProductById(int productId) const;
