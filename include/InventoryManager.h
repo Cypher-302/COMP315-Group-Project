@@ -9,7 +9,7 @@ class InventoryManager
 {
     public:
         /**
-            Constructs an Order object with the following details.
+            Constructs an InventoryManager object with the following details.
             @param a mapping with the integer key = productID and value = pointer to the product object to be used
         */
         InventoryManager(std::map<int, std::shared_ptr<Product>> productMap);
@@ -68,7 +68,7 @@ class InventoryManager
 
           * processes orders
           * @param product id, quantity requested of the product
-          * @return bool
+          * @return True if order is successfully processed, False otherwise
         */
         bool processOrder(int productId, int quantityRequested);
 

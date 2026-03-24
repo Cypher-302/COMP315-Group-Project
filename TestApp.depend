@@ -320,3 +320,58 @@
 	"../include/TaxableProduct.h"
 	<iostream>
 
+1774354171 source:c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\main.cpp
+	<iostream>
+	<ctime>
+	<chrono>
+	<thread>
+	<vector>
+	<string>
+	"include/Product.h"
+	"include/DiscountedProduct.h"
+	"include/TaxableProduct.h"
+	"include/InventoryManager.h"
+
+1774354171 c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\include\product.h
+	<string>
+
+1774354171 c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\include\discountedproduct.h
+	"Product.h"
+	<string>
+
+1774354171 c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\include\taxableproduct.h
+	"Product.h"
+	<string>
+
+1774355252 c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\include\inventorymanager.h
+	<map>
+	<memory>
+	<mutex>
+	"Product.h"
+
+1774354171 source:c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\src\discountedproduct.cpp
+	"../include/DiscountedProduct.h"
+	<iostream>
+	<string>
+
+1774354171 source:c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\src\inventorymanager.cpp
+	"../include/InventoryManager.h"
+	<iostream>
+
+1774354171 source:c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\src\order.cpp
+	<string>
+	"../include/Order.h"
+
+1774354171 c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\include\order.h
+	<string>
+
+1774354171 source:c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\src\product.cpp
+	<iostream>
+	"../include/Product.h"
+	<string>
+
+1774354171 source:c:\users\224039813\downloads\comp315-group-project-main\comp315-group-project-main\src\taxableproduct.cpp
+	<string>
+	"../include/TaxableProduct.h"
+	<iostream>
+
