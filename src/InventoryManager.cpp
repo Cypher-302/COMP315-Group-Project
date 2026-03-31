@@ -33,6 +33,7 @@ bool InventoryManager::addNewProduct(shared_ptr<Product> product) {
 
 /**
   * remove product from the inventory by id
+  * Thread safe
   * @param product id
   * @return True if product is successfully removed, false otherwise
 */
@@ -52,6 +53,7 @@ bool InventoryManager::removeProduct(int productId) {
 
 /**
   * searches for a product using productId
+  * Thread safe
   * @param product id
   * @return shared pointer to the product object, null pointer otherwise
 */
@@ -70,6 +72,7 @@ shared_ptr<Product> InventoryManager::searchProductById(int productId) const {
 
 /**
   * displays all product if available
+  * Thread safe
 */
 void InventoryManager::displayAllProducts() const {
 
@@ -83,6 +86,34 @@ void InventoryManager::displayAllProducts() const {
     for(auto p : productMap) {
         p.second->display();
     }
+}
+
+/**
+  * processes orders
+  * Thread safe
+  * @param product id, quantity requested of the product
+  * @return true if order is successfully processed, false otherwise
+*/
+bool InventoryManager::processOrder(int productId, int quantityRequested) {
+
+    if(quantityRequested <= 0) return false;
+
+    std::lock_guard<std::mutex> lock(mapMutex);
+
+    auto it = productMap.find(productId);
+
+    if(it != productMap.end()) {
+
+        int quantity = it->second->getQuant();
+
+        if(quantity >= quantityRequested) {
+
+            it->second->setQuant(quantity - quantityRequested);
+            return true;
+        }
+    }
+
+    return false;
 }
 
 InventoryManager::~InventoryManager(){}
