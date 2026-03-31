@@ -18,22 +18,22 @@ class OrderProcessor final
         OrderProcessor(std::shared_ptr<InventoryManager> inv);
 
         /**
-            @brief Destructor
-
+            Ensures that the program runs without crashing by ensuring
+             threads are finished before they are destroyed
         */
         ~OrderProcessor();
 
         /**
             @brief Starting point for the multi-threaded simulation.
             Instantiates at least 5 std::thread objects, stores them in
-            the workerThreads vector and ensures they all finish processing
+             the workerThreads vector and ensures they all finish processing
         */
         void runSimulation();
 
         /**
             @brief Displays a final summary of the simulation.
             Displays the final status for all processed orders in the
-            orderHistory vector
+             orderHistory vector
         */
         void displayHistory();
     protected:
@@ -47,7 +47,7 @@ class OrderProcessor final
         /**
             @brief The logic executed by each of the threads
             Attempts a random purchase, then adds to the orderHistory
-            vector.
+             vector.
         */
         void threadWorkerFunc();
 };

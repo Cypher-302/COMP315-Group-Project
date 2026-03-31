@@ -40,6 +40,7 @@
 		<Unit filename="include/OrderProcessor.h" />
 		<Unit filename="include/Product.h" />
 		<Unit filename="include/TaxableProduct.h" />
+		<Unit filename="include/Utility.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/DiscountedProduct.cpp" />
 		<Unit filename="src/InventoryManager.cpp" />
@@ -47,6 +48,7 @@
 		<Unit filename="src/OrderProcessor.cpp" />
 		<Unit filename="src/Product.cpp" />
 		<Unit filename="src/TaxableProduct.cpp" />
+		<Unit filename="src/Utility.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

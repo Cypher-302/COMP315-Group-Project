@@ -1,6 +1,5 @@
 #include <iostream>
-#include <ctime>
-#include <chrono>
+
 #include <thread>
 #include <vector>
 #include <string>
@@ -8,102 +7,16 @@
 #include "include/DiscountedProduct.h"
 #include "include/TaxableProduct.h"
 #include "include/InventoryManager.h"
+#include "include/Utility.h"
+
 using namespace std;
-
-/**
-    Sleeps\Pauses program for an amount of time
-    @param mSec - duration in milliseconds
-*/
-void pause(int mSec){
-    this_thread::sleep_for(chrono::milliseconds(mSec));
-}
-
-/**
-    Prints a character a repeated number of times, plus new line
-    @param c - the character
-    @param reps - number of repetitions
-*/
-void printChars(char c, int reps){
-    for(int i=1; i< reps; i++){
-        cout<<c;
-    }
-    cout<<"\n";
-}
-
-/**
-    Prints a character with seperators a repeated number of times, plus new line
-    @param c - the character
-    @param sep - seperating character
-    @param reps - number of repetitions
-*/
-void printChars(char c, char sep, int reps){
-    for(int i=1; i< reps; i++){
-        cout<<c<< sep;
-    }
-    cout<< "\n";
-}
-
-/**
-    Prints a character with seperators a repeated number of times
-    @param c - the character
-    @param sep - seperating character
-    @param reps - number of repetitions
-*/
-void printRep(char c, char sep, int reps){
-    for(int i=1; i< reps; i++){
-        cout<<c<< sep;
-    }
-}
-/**
-    Draws a line of arrows across console
-*/
-void line(){
-    cout<<"\n";
-    printChars('«','»',65); // from reps
-    cout<<"\n";
-}
-
-/**
-    Apends spaces to strings less than 20 chars
-    @param str - input string
-*/
-void fillString(string *str){
-    int spaces = 20 - (*str).length();
-    for(int i=spaces; i > 0; i--){
-        *str +=" ";
-    }
-}
-/**
-    Displays information of all products in a table format
-    @param prods - a pointer to the vector of products
-*/
-void displayAllProds(vector<Product> *prods){
-    string prodID, prodName,price,quantity;
-
-    printRep(' ',' ',14); printRep('_','_',55);cout<<"\n";
-    printRep(' ',' ',14 -1); cout<<"| Product ID          | Product Name        | Price               | Quantity            | Final Price          |";cout<<"\n";
-    printRep(' ',' ',14); printRep('_','_',55);cout<<"\n";
-    for(Product p: *prods){
-        prodID = to_string(p.getId());
-        prodName = p.getName();
-        quantity = to_string(p.getQuant());
-        price = to_string(p.calculateFinalPrice());
-        //ensure size
-        fillString(&prodID);fillString(&prodName);fillString(&quantity);fillString(&price);
-        // print row
-        printRep(' ',' ',14 -1);
-        cout<<"| "<<prodID<<"| "<<prodName<<"| "<<price<<"| "<<quantity<<"|\n";
-        printRep(' ',' ',14); printRep('_','_',44);cout<<"\n";
-
-    }
-}
+using namespace Utility;
 
 /**
     Runs the Product Management aspect of program
     @param products - Product vector
 */
 void runPM(InventoryManager& manager){
-
     int option;
     const int center = 27;
     do {
@@ -196,7 +109,7 @@ void runPM(InventoryManager& manager){
 
             cout<<"\n";
             printRep(' ',' ',center);
-			cout << "Product successfully added!\n" << endl; pause(2000);
+			cout << "Product successfully added!\n" << endl; pause(1000);
 			break;
 		}
 
@@ -207,7 +120,7 @@ void runPM(InventoryManager& manager){
 		case 3:
 
             manager.displayAllProducts();
-            pause(2000);
+            pause(1000);
 			break;
 
 
@@ -297,7 +210,7 @@ int main()
 
     printChars('*',' ',reps);
     printChars('*',' ',reps);
-    pause(2000);
+    pause(1000);
     printChars('=',' ',reps);
     printRep(' ',' ',center);
     cout<< "Welcome to Nexus LogiQ\n";
@@ -305,7 +218,7 @@ int main()
     printChars('=',' ',reps);
     printChars('*',' ',reps);
     printChars('*',' ',reps);
-    pause(2000);
+    pause(1000);
 
 
     /* Main Menu and Options */
@@ -339,13 +252,13 @@ int main()
             case 3:{
                 cout<<"\n";
                 printRep(' ',' ',center); cout<< "Help currently unavailable. Sorry :0 :(\n";
-                pause(2000);
+                pause(1000);
                 break;
             }
             case -1: {
                 cout<<"\n";
                 printRep(' ',' ',center); cout << "Exiting system...\n";
-                pause(2000);
+                pause(1000);
                 break;
             }
             default: {
