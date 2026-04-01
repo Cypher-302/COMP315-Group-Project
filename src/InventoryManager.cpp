@@ -1,6 +1,8 @@
 #include "../include/InventoryManager.h"
 #include <iostream>
+
 using namespace std;
+
 
 /**
   * Constructs an Order object with the following details.
@@ -74,18 +76,22 @@ shared_ptr<Product> InventoryManager::searchProductById(int productId) const {
   * displays all product if available
   * Thread safe
 */
-void InventoryManager::displayAllProducts() const {
+bool InventoryManager::displayAllProducts() const {
 
     std::lock_guard<std::mutex> lock(mapMutex);
 
     if(productMap.empty()) {
         cout << "No products available";
-        return;
+        return false;
     }
+
+    int center = 30;
+    cout << string(center, ' ');
 
     for(auto p : productMap) {
         p.second->display();
     }
+    return true;
 }
 
 /**
@@ -115,6 +121,23 @@ bool InventoryManager::processOrder(int productId, int quantityRequested) {
 
     return false;
 }
+
+bool InventoryManager::updateProduct(int productID, int newQuantity) {
+    if(newQuantity < 0) return false;
+
+    std::lock_guard<std::mutex> lock(mapMutex);
+
+    auto it = productMap.find(productID);
+
+    if(it != productMap.end() && it->second) {
+        it->second->setQuant(newQuantity);
+        return true;
+    }
+
+    return false;
+}
+
+
 
 InventoryManager::~InventoryManager(){}
 

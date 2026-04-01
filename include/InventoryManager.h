@@ -62,7 +62,7 @@ class InventoryManager
           * displays product in the inventory
 
         */
-        void displayAllProducts() const;
+        bool displayAllProducts() const;
 
         /**
 
@@ -71,6 +71,27 @@ class InventoryManager
           * @return True if order is successfully processed, False otherwise
         */
         bool processOrder(int productId, int quantityRequested);
+
+        /**
+
+          * update product using productID and quantity
+          * @param productID, quantity
+          * @return bool, if product updates true, otherwise
+
+        */
+
+        bool updateProduct(int productID, int newQuant);
+
+
+        /**
+
+          * Removes the Product using productID
+          * @param name
+          * @return bool, true if removed, otherwise
+
+        */
+
+        bool removeProduct(const std::string &name);
 
     private:
         std::map<int, std::shared_ptr<Product>> productMap;

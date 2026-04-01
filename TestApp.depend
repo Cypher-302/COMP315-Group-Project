@@ -484,3 +484,85 @@
 	<string>
 	"../include/Product.h"
 
+1775076248 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\main.cpp
+	<iostream>
+	<thread>
+	<vector>
+	<string>
+	"include/Product.h"
+	"include/DiscountedProduct.h"
+	"include/TaxableProduct.h"
+	"include/InventoryManager.h"
+	"include/Utility.h"
+
+1775065175 c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\include\product.h
+	<string>
+
+1775065175 c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\include\discountedproduct.h
+	"Product.h"
+	<string>
+
+1775065175 c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\include\taxableproduct.h
+	"Product.h"
+	<string>
+
+1775075246 c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\include\inventorymanager.h
+	<map>
+	<memory>
+	<mutex>
+	"Product.h"
+
+1775065175 c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\include\utility.h
+	<string>
+	<vector>
+	"../include/Product.h"
+
+1775065175 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\src\orderprocessor.cpp
+	"OrderProcessor.h"
+	<iostream>
+	<thread>
+
+1775065175 c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\include\orderprocessor.h
+	<vector>
+	<memory>
+	<thread>
+	<mutex>
+	"Order.h"
+	"InventoryManager.h"
+
+1775065175 c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\include\order.h
+	<string>
+
+1775067565 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\src\discountedproduct.cpp
+	"../include/DiscountedProduct.h"
+	<iostream>
+	<string>
+
+1775076583 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\src\inventorymanager.cpp
+	"../include/InventoryManager.h"
+	<iostream>
+
+1775067565 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\src\order.cpp
+	<string>
+	"../include/Order.h"
+
+1775067565 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\src\product.cpp
+	<iostream>
+	"../include/Product.h"
+	<string>
+
+1775067565 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\src\taxableproduct.cpp
+	<string>
+	"../include/TaxableProduct.h"
+	<iostream>
+
+1775068442 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\src\utility.cpp
+	"Utility.h"
+	<iostream>
+	<thread>
+	<ctime>
+	<chrono>
+	<vector>
+	<string>
+	"../include/Product.h"
+

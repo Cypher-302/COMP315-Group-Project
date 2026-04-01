@@ -16,6 +16,35 @@ using namespace Utility;
     Runs the Product Management aspect of program
     @param products - Product vector
 */
+map<int, shared_ptr<Product>> productMap;
+    InventoryManager manager(productMap);
+
+void getUpdate(){
+    int center = 20;
+    printRep(' ',' ',center);
+    cout << "========== Search / Update Product ==========" << endl;
+
+
+    printRep(' ',' ',center);
+    cout << "Enter productID: ";
+
+    int productID;
+    cin >> productID;
+
+    printRep(' ',' ',center);
+    cout << "Enter Quantity: ";
+
+    int quant;
+    cin >> quant;
+
+    manager.updateProduct(productID, quant);
+    printRep(' ',' ',center);
+			cout << "Product Updated" << endl;
+    cout << "============================================" << endl;
+
+
+}
+
 void runPM(InventoryManager& manager){
     int option;
     const int center = 27;
@@ -35,6 +64,7 @@ void runPM(InventoryManager& manager){
 		printRep(' ',' ',center);
 		cout << "5. Sort products by price or quantity " << endl;
 		printRep(' ',' ',center);
+		cout << "6. Update Product " << endl;
 		cout << "0. Back\n" << endl;
 		printRep(' ',' ',center);
 		cout << "===========================\n" << endl;
@@ -114,7 +144,7 @@ void runPM(InventoryManager& manager){
 		}
 
 		case 2:
-
+            // We still need to look at the "Remove Product" Implementation
 			break;
 
 		case 3:
@@ -136,6 +166,28 @@ void runPM(InventoryManager& manager){
 			@todo insert search code
 			*/
 			break;
+		}
+
+		case 6: {
+
+		    if(manager.displayAllProducts()){
+                getUpdate();
+                runPM(manager);
+                return;
+		    }
+
+                        printRep(' ', ' ', center);
+            cout << "============================" << endl;
+
+            printRep(' ', ' ', center);
+            cout << "There are no Products in Inventory" << endl;
+
+            printRep(' ', ' ', center);
+            cout << "============================" << endl;
+
+            runPM(manager);
+
+		    break;
 		}
 
 		case 0:
@@ -200,8 +252,7 @@ void runOP(){
 
 int main()
 {
-    map<int, shared_ptr<Product>> productMap;
-    InventoryManager manager(productMap);
+
 
     int option;
 
@@ -261,6 +312,7 @@ int main()
                 pause(1000);
                 break;
             }
+
             default: {
                 cout<<"\n";
                 printRep(' ',' ',center); cout << "Invalid option. Try again.\n";
