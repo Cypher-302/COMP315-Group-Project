@@ -19,6 +19,41 @@ using namespace Utility;
 map<int, shared_ptr<Product>> productMap;
     InventoryManager manager(productMap);
 
+void removeProduct(){
+    int center = 20;
+    cout << "====== PRODUCT SEARCH ======" << endl;
+    printRep(' ',' ',center);
+
+    cout << "Enter Product ID: ";
+    int productID;
+    cin >> productID;
+
+    printRep(' ',' ',center);
+    cout << "============================" << endl;
+    if(manager.removeProduct(productID)){
+        cout << "====== PRODUCT REMOVED ======" << endl;
+        printRep(' ',' ',center);
+
+        cout << "The product has been successfully removed." << endl;
+
+        printRep(' ',' ',center);
+        cout << "=============================" << endl;
+        return;
+    }
+        cout << "====== PRODUCT NOT FOUND ======" << endl;
+        printRep(' ',' ',center);
+
+        cout << "No product with the given ID was found." << endl;
+
+        printRep(' ',' ',center);
+        cout << "===============================" << endl;
+
+}
+
+
+
+
+
 void getUpdate(){
     int center = 20;
     printRep(' ',' ',center);
@@ -146,6 +181,7 @@ void runPM(InventoryManager& manager){
 
 		case 2:
             // We still need to look at the "Remove Product" Implementation
+            removeProduct();
 			break;
 
 		case 3:
