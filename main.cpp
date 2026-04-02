@@ -39,7 +39,8 @@ void getUpdate(){
 
     manager.updateProduct(productID, quant);
     printRep(' ',' ',center);
-			cout << "Product Updated" << endl;
+
+    cout << "Product Updated" << endl;
     cout << "============================================" << endl;
 
 
