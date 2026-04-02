@@ -5,6 +5,7 @@
 #include <memory>
 #include <thread>
 #include <mutex>
+#include <atomic>
 #include "Order.h"
 #include "InventoryManager.h"
 
@@ -43,6 +44,10 @@ class OrderProcessor final
         std::vector<std::shared_ptr<Order>> orderHistory;
         std::mutex historyMutex;
         std::vector<std::thread> workerThreads;
+
+        static constexpr int TOTAL_REQUIRED_ORDERS = 20;
+        static constexpr int NUM_THREADS = 5;
+        static constexpr int ORDERS_PER_THREAD = TOTAL_REQUIRED_ORDERS/NUM_THREADS;
 
         /**
             @brief The logic executed by each of the threads

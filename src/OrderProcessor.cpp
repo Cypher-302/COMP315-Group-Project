@@ -1,5 +1,8 @@
 #include "../include/OrderProcessor.h"
+#include <cstdlib>
 #include <iostream>
+#include <memory>
+#include <mutex>
 #include <thread>
 
 OrderProcessor::OrderProcessor(std::shared_ptr<InventoryManager> inv) : inventory(inv)
@@ -70,4 +73,19 @@ void OrderProcessor::threadWorkerFunc()
     //  class as member variables?
     // Could just keep const ORDERS_PER_THREAD in this function and const
     //  NUM_THREADS in runSimulation, but that feels too "magic-numbery"
+
+    for(int i = 0; i < ORDERS_PER_THREAD; i++){
+        int productId = rand() % 10 + 1;
+        int quantity = rand() % 5 + 1;
+
+        bool success = inventory->processOrder(productId, quantity);
+
+        static std::atomic<int> nextOrderID(1);
+        auto order = std::make_shared<Order>(nextOrderID, productId, quantity, success);
+
+        {
+            std::lock_guard<std::mutex> lock(historyMutex);
+            orderHistory.push_back(order);
+        }
+    }
 }
