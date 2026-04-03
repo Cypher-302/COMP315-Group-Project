@@ -64,24 +64,22 @@ void OrderProcessor::displayHistory()
 
 void OrderProcessor::threadWorkerFunc()
 {
-    // TODO
-
-    //const int TOTAL_REQUIRED_ORDERS = 20;
-    //const int ORDERS_PER_THREAD = TOTAL_REQUIRED_ORDERS / NUM_THREADS;
-
-    // ^ These should be somewhere in the program, maybe a part of this
-    //  class as member variables?
-    // Could just keep const ORDERS_PER_THREAD in this function and const
-    //  NUM_THREADS in runSimulation, but that feels too "magic-numbery"
 
     for(int i = 0; i < ORDERS_PER_THREAD; i++){
-        int productId = rand() % 10 + 1;
-        int quantity = rand() % 5 + 1;
 
+        //generate a random productID
+        int productId = rand() % 10 + 1;
+        int quantity = rand() % 5 + 1;  //generates a random quantity
+
+        //tries to fulfill the order against the shared inventory. 
+        // returns true it there's sufficient stock
         bool success = inventory->processOrder(productId, quantity);
 
+        //generates a unique Order ID across all threads
         static std::atomic<int> nextOrderID(1);
-        auto order = std::make_shared<Order>(nextOrderID, productId, quantity, success);
+
+        //Construct the order record on the heap, the shared_ptr allows safety
+        auto order = std::make_shared<Order>(nextOrderID++, productId, quantity, success);
 
         {
             std::lock_guard<std::mutex> lock(historyMutex);
