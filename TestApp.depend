@@ -484,7 +484,7 @@
 	<string>
 	"../include/Product.h"
 
-1775076248 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\main.cpp
+1775170138 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\main.cpp
 	<iostream>
 	<thread>
 	<vector>
@@ -517,16 +517,20 @@
 	<vector>
 	"../include/Product.h"
 
-1775065175 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\src\orderprocessor.cpp
-	"OrderProcessor.h"
+1775169063 source:c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\src\orderprocessor.cpp
+	"../include/OrderProcessor.h"
+	<cstdlib>
 	<iostream>
+	<memory>
+	<mutex>
 	<thread>
 
-1775065175 c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\include\orderprocessor.h
+1775169063 c:\users\anoth\onedrive\documents\university\code - comp315\threadingsystem\comp315-group-project\include\orderprocessor.h
 	<vector>
 	<memory>
 	<thread>
 	<mutex>
+	<atomic>
 	"Order.h"
 	"InventoryManager.h"
 
