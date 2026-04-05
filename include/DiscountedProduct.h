@@ -49,6 +49,11 @@ public:
     double calculateFinalPrice() override;
     void display() override;
 
+    /**
+        Displays the tabulated version of all the product's details
+    */
+    void displayTab() override;
+
 };
 
 #endif // DISCOUNTEDPRODUCT_H

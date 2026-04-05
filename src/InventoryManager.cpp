@@ -2,6 +2,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "../include/Utility.h"
+
+using namespace Utility;
 
 using namespace std;
 
@@ -90,8 +93,14 @@ bool InventoryManager::displayAllProducts() const {
     int center = 30;
     cout << string(center, ' ');
 
+    // prepare table
+        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
+        printRep(' ',' ',14 -1); std::cout<<"| Product ID          | Product Name        | Price               | Quantity            | Final Price          |"; std::cout<<"\n";
+        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
     for(auto p : productMap) {
-        p.second->display();
+        p.second->displayTab();
+
+        printRep(' ',' ',14); printRep('_','_',44);std::cout<<"\n";
     }
     return true;
 }
@@ -131,7 +140,7 @@ bool InventoryManager::processOrder(int productId, int quantityRequested) {
 */
 void InventoryManager::sortAndDisplayProductByPrice(){
 
-    std::lock_guard<std::mutex> lock(mapMutex);
+   std::lock_guard<std::mutex> lock(mapMutex);
 
     std::vector<std::shared_ptr<Product>> holder;
 if(productMap.empty()){cout<<"No products in inventory to be displayed";}else{
@@ -144,8 +153,14 @@ if(productMap.empty()){cout<<"No products in inventory to be displayed";}else{
                   return (a->getPrice())< (b->getPrice());
 
               } );
+    // prepare table
+        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
+        printRep(' ',' ',14 -1); std::cout<<"| Product ID          | Product Name        | Price               | Quantity            | Final Price          |"; std::cout<<"\n";
+        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
     for(std::shared_ptr<Product>& p: holder){
-        p->display();
+        p->displayTab();
+
+        printRep(' ',' ',14); printRep('_','_',44);std::cout<<"\n";
     }
 }//end of ifelse
 }
@@ -156,7 +171,7 @@ if(productMap.empty()){cout<<"No products in inventory to be displayed";}else{
 
 */
 void InventoryManager::sortAndDisplayProductByQuantity(){
-    std::lock_guard<std::mutex> lock(mapMutex);
+  std::lock_guard<std::mutex> lock(mapMutex);
 
     std::vector<std::shared_ptr<Product>> holder;
 if(productMap.empty()){cout<<"No products in inventory to be displayed";}else{
@@ -169,8 +184,16 @@ if(productMap.empty()){cout<<"No products in inventory to be displayed";}else{
                   return (a->getQuant())< (b->getQuant());
 
               } );
+
+    // prepare table
+        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
+        printRep(' ',' ',14 -1); std::cout<<"| Product ID          | Product Name        | Price               | Quantity            | Final Price          |"; std::cout<<"\n";
+        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
+
     for(std::shared_ptr<Product>& p: holder){
-        p->display();
+        p->displayTab();
+
+        printRep(' ',' ',14); printRep('_','_',44);std::cout<<"\n";
     }
 }//end of ifelse
 

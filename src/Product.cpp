@@ -1,8 +1,9 @@
 #include <iostream>
 #include "../include/Product.h"
 #include <string>
+#include "../include/Utility.h"
 
-
+using namespace Utility;
 
 Product::Product(std::string the_name, double the_price, int id, int the_quantity)
             :name(the_name), price(the_price), productID(id) ,quantity(the_quantity){
@@ -67,5 +68,18 @@ void Product::display(){
              << ", Price: " << getPrice()
              << ", Quantity: " << getQuant()
              << ", Final Price: " << calculateFinalPrice() << std::endl;
+
+}
+void Product::displayTab(){
+    std::string prodID, prodName, price, quantity;
+            prodID = std::to_string(getId());
+            prodName = getName();
+            quantity = std::to_string(getQuant());
+            price = std::to_string(calculateFinalPrice());
+            //ensure size
+            fillString(prodID);fillString(prodName);fillString(quantity);fillString(price);
+            // print row
+            printRep(' ',' ',14 -1);
+            std::cout<<"| "<<prodID<<"| "<<prodName<<"| "<<price<<"| "<<quantity<<"|\n";
 }
 

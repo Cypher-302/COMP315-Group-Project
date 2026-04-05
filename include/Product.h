@@ -82,9 +82,13 @@ public:
 
     /**
         Displays all the details of this product
-        @param id
     */
     virtual void display();
+
+    /**
+        Displays the tabulated version of all the product's details
+    */
+    virtual void displayTab();
 
 
 };

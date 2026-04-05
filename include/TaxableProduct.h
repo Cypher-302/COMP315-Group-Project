@@ -45,9 +45,12 @@ public:
 
     /**
         Displays the statement/details of the product
-        @param id
      */
     void display() override;
+    /**
+        Displays the tabulated version of all the product's details
+    */
+    void displayTab() override;
 };
 
 #endif // TAXABLEPRODUCT_H
