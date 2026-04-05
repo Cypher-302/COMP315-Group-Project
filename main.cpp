@@ -101,6 +101,7 @@ void runPM(InventoryManager& manager){
 		cout << "5. Sort products by price or quantity " << endl;
 		printRep(' ',' ',center);
 		cout << "6. Update Product " << endl;
+		printRep(' ',' ',center);
 		cout << "0. Back\n" << endl;
 		printRep(' ',' ',center);
 		cout << "===========================\n" << endl;
@@ -204,13 +205,36 @@ void runPM(InventoryManager& manager){
 			*/
 			break;
 		}
+		case 5: {
+            int subOption;
+            cout<<"\n";
+            printRep(' ',' ',center);
+            cout << "========= Sort products =========" << endl;
+            printRep(' ',' ',center);
+            cout << "1. Sort by Price and Display" << endl;
+            printRep(' ',' ',center);
+            cout << "2. Sort by Quantity and Display" << endl;
+            printRep(' ',' ',center);
+            cout << "===========================" << endl;
+            printRep(' ',' ',center);
+            cout << "Select option: ";
+
+            cin >> subOption;
+            if(subOption==1){
+                manager.sortAndDisplayProductByPrice();
+            }else if(subOption==2){
+                manager.sortAndDisplayProductByQuantity();
+            }else{
+                cout<< "Invalid option Entered";
+            }
+            break;
+		}
 
 		case 6: {
 
-		    if(manager.displayAllProducts()){
+		   if(manager.displayAllProducts()){
                 getUpdate();
-                runPM(manager);
-                return;
+                break;
 		    }
 
                         printRep(' ', ' ', center);
@@ -307,7 +331,9 @@ int main()
     printChars('*',' ',reps);
     printChars('*',' ',reps);
     pause(1000);
-
+       if(manager.loadMap() == 0){
+        std::cerr<<"Failed to load Inventory"<<endl;
+       }
 
     /* Main Menu and Options */
 
@@ -346,6 +372,7 @@ int main()
             case -1: {
                 cout<<"\n";
                 printRep(' ',' ',center); cout << "Exiting system...\n";
+                manager.storeMap();
                 pause(1000);
                 break;
             }

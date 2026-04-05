@@ -41,15 +41,17 @@ void TaxableProduct::display(){
              << ", Final Price: R" << calculateFinalPrice() << std::endl;
 }
 void TaxableProduct::displayTab(){
-    std::string prodID, prodName, price, quantity;
+    std::string prodID, prodName, price, quantity,finalPrice;
             prodID = std::to_string(getId());
             prodName = getName();
             quantity = std::to_string(getQuant());
-            price = std::to_string(calculateFinalPrice());
+            price = std::to_string(getPrice());
+            finalPrice = std::to_string(calculateFinalPrice());
             //ensure size
             fillString(prodID);fillString(prodName);fillString(quantity);fillString(price);
+            fillString(finalPrice);
             // print row
             printRep(' ',' ',14 -1);
-            std::cout<<"| "<<prodID<<"| "<<prodName<<"| "<<price<<"| "<<quantity<<"|\n";
+            std::cout<<"| "<<prodID<<"| "<<prodName<<"| "<<price<<"| "<<quantity<<"| "<<finalPrice<<"|\n";
 }
 

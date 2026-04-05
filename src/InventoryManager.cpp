@@ -94,17 +94,15 @@ bool InventoryManager::displayAllProducts() const {
         return false;
     }
 
-    int center = 30;
-    cout << string(center, ' ');
 
     // prepare table
         printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
-        printRep(' ',' ',14 -1); std::cout<<"| Product ID          | Product Name        | Price               | Quantity            | Final Price          |"; std::cout<<"\n";
+        printRep(' ',' ',14 -1); std::cout<<"| Product ID          | Product Name        | Price               | Quantity            | Final Price         |"; std::cout<<"\n";
         printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
     for(auto p : productMap) {
         p.second->displayTab();
 
-        printRep(' ',' ',14); printRep('_','_',44);std::cout<<"\n";
+        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
     }
     return true;
 }
@@ -164,7 +162,7 @@ if(productMap.empty()){cout<<"No products in inventory to be displayed";}else{
     for(std::shared_ptr<Product>& p: holder){
         p->displayTab();
 
-        printRep(' ',' ',14); printRep('_','_',44);std::cout<<"\n";
+        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
     }
 }//end of ifelse
 }
@@ -197,7 +195,7 @@ if(productMap.empty()){cout<<"No products in inventory to be displayed";}else{
     for(std::shared_ptr<Product>& p: holder){
         p->displayTab();
 
-        printRep(' ',' ',14); printRep('_','_',44);std::cout<<"\n";
+        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
     }
 }//end of ifelse
 
@@ -213,7 +211,7 @@ bool InventoryManager::updateProduct(int productID, int newQuantity) {
     auto it = productMap.find(productID);
 
     if(it != productMap.end() && it->second) {
-        it->second->setQuant(newQuantity);
+        it->second->setQuant((it->second->getQuant())+newQuantity);
         return true;
     }
 
@@ -253,7 +251,7 @@ int InventoryManager::loadMap(){
     int quant,id;
     double price,discOrTax;
     if(!file){return 1;}
-    std::lock_guard<std::mutex> lock(mapMutex);
+
 
 
     std::string line, word;
@@ -279,6 +277,7 @@ int InventoryManager::loadMap(){
             discOrTax = std::stod(hold[5]);
             addNewProduct(make_shared<TaxableProduct>(hold[2], price, id, quant, discOrTax));
         }
+        hold.clear();
 
     }
 
