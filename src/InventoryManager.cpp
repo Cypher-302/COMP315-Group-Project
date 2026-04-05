@@ -3,6 +3,10 @@
 #include <vector>
 #include <algorithm>
 #include "../include/Utility.h"
+#include <fstream>
+#include "DiscountedProduct.h"
+#include "TaxableProduct.h"
+#include <sstream>
 
 using namespace Utility;
 
@@ -215,8 +219,72 @@ bool InventoryManager::updateProduct(int productID, int newQuantity) {
 
     return false;
 }
+/*
+    ProductData.txt format
+    Type#ID#Name#Quant#Price#Tax or Discount
+*/
+int InventoryManager::storeMap(){
+    std::ofstream file("ProductData.txt", std::ios::trunc);
+
+    if(!file){return 1;}
+    std::lock_guard<std::mutex> lock(mapMutex);
+
+    for(auto& e: productMap){
+        if(e.second->getType() == "Product"){
+
+        file<<e.second->getType()<<"#"<<e.second->getId()<<"#"<<e.second->getName()<<"#"<<e.second->getQuant()<<"#"<<e.second->getPrice()<<endl;
+
+        }else if(e.second->getType() == "DiscountedProduct"){
+        auto dp = std::dynamic_pointer_cast<DiscountedProduct>(e.second);
+        file<<e.second->getType()<<"#"<<e.second->getId()<<"#"<<e.second->getName()<<"#"<<e.second->getQuant()<<"#"<<e.second->getPrice()<<"#"<<dp->getDiscount()<<endl;
+
+        }else{
+        auto tp = std::dynamic_pointer_cast<TaxableProduct>(e.second);
+        file<<e.second->getType()<<"#"<<e.second->getId()<<"#"<<e.second->getName()<<"#"<<e.second->getQuant()<<"#"<<e.second->getPrice()<<"#"<<tp->getTax()<<endl;
+
+        }
+    }
+    return 0;
+}
+
+int InventoryManager::loadMap(){
+    std::ifstream file("ProductData.txt");
+    std::vector<string> hold;
+    int quant,id;
+    double price,discOrTax;
+    if(!file){return 1;}
+    std::lock_guard<std::mutex> lock(mapMutex);
 
 
+    std::string line, word;
+    while(std::getline(file,line)){
+        std::stringstream str(line);
+        while(std::getline(str,word,'#')){
+            hold.push_back(word);
+        }
+
+        //
+        quant = std::stoi(hold[3]);
+        price =std::stod(hold[4]);
+        id = std::stoi(hold[1]);
+
+        if(hold[0]=="Product"){
+            addNewProduct(make_shared<Product>(hold[2], price, id, quant));
+
+        }else if(hold[0]=="DiscountedProduct"){
+            discOrTax = std::stod(hold[5]);
+            addNewProduct(make_shared<DiscountedProduct>(hold[2], price, id, quant,discOrTax));
+
+        }else{
+            discOrTax = std::stod(hold[5]);
+            addNewProduct(make_shared<TaxableProduct>(hold[2], price, id, quant, discOrTax));
+        }
+
+    }
+
+
+    return 0;
+}
 
 InventoryManager::~InventoryManager(){}
 

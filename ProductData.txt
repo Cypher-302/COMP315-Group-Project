@@ -1,0 +1,5 @@
+Product#11111#Rolex#40#5600.5
+TaxableProduct#22222#T-Shirt#45#80#13.4
+Product#33333#Head Phones#11#750.0
+DiscountedProduct#44444#Sneakers#27#1375.50#15.6
+DiscountedProduct#55555#Samsung A16#106#2780.99#10.95

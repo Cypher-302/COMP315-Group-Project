@@ -570,7 +570,7 @@
 	<string>
 	"../include/Product.h"
 
-1775243518 source:c:\users\student\documents\github\comp315-group-project\main.cpp
+1775416683 source:c:\users\student\documents\github\comp315-group-project\main.cpp
 	<iostream>
 	<thread>
 	<vector>
@@ -581,18 +581,18 @@
 	"include/InventoryManager.h"
 	"include/Utility.h"
 
-1775367591 c:\users\student\documents\github\comp315-group-project\include\product.h
+1775417721 c:\users\student\documents\github\comp315-group-project\include\product.h
 	<string>
 
-1775367780 c:\users\student\documents\github\comp315-group-project\include\discountedproduct.h
+1775417777 c:\users\student\documents\github\comp315-group-project\include\discountedproduct.h
 	"Product.h"
 	<string>
 
-1775367757 c:\users\student\documents\github\comp315-group-project\include\taxableproduct.h
+1775417785 c:\users\student\documents\github\comp315-group-project\include\taxableproduct.h
 	"Product.h"
 	<string>
 
-1775243518 c:\users\student\documents\github\comp315-group-project\include\inventorymanager.h
+1775418167 c:\users\student\documents\github\comp315-group-project\include\inventorymanager.h
 	<map>
 	<memory>
 	<mutex>
@@ -603,7 +603,7 @@
 	<vector>
 	"../include/Product.h"
 
-1775368872 source:c:\users\student\documents\github\comp315-group-project\src\discountedproduct.cpp
+1775417941 source:c:\users\student\documents\github\comp315-group-project\src\discountedproduct.cpp
 	"../include/DiscountedProduct.h"
 	<iostream>
 	<string>
@@ -633,13 +633,13 @@
 	"Order.h"
 	"InventoryManager.h"
 
-1775368724 source:c:\users\student\documents\github\comp315-group-project\src\product.cpp
+1775417864 source:c:\users\student\documents\github\comp315-group-project\src\product.cpp
 	<iostream>
 	"../include/Product.h"
 	<string>
 	"../include/Utility.h"
 
-1775368890 source:c:\users\student\documents\github\comp315-group-project\src\taxableproduct.cpp
+1775417907 source:c:\users\student\documents\github\comp315-group-project\src\taxableproduct.cpp
 	<string>
 	"../include/TaxableProduct.h"
 	<iostream>
@@ -655,10 +655,14 @@
 	<string>
 	"../include/Product.h"
 
-1775369343 source:c:\users\student\documents\github\comp315-group-project\src\inventorymanager.cpp
+1775421953 source:c:\users\student\documents\github\comp315-group-project\src\inventorymanager.cpp
 	"../include/InventoryManager.h"
 	<iostream>
 	<vector>
 	<algorithm>
 	"../include/Utility.h"
+	<fstream>
+	"DiscountedProduct.h"
+	"TaxableProduct.h"
+	<sstream>
 

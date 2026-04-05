@@ -27,14 +27,18 @@ double TaxableProduct::calculateFinalPrice(){
     double store = getPrice() * value;
     return getPrice() + store;
 }
+ std::string TaxableProduct::getType() const {
+        return "TaxableProduct";
+}
+
 
 void TaxableProduct::display(){
      std::cout << "ID: " << getId()
              << ", Name: " << getName()
              << ", Tax: " << getTax()
-             << ", Price: " << getPrice()
+             << "% , Price: R" << getPrice()
              << ", Quantity: " << getQuant()
-             << ", Final Price: " << calculateFinalPrice() << std::endl;
+             << ", Final Price: R" << calculateFinalPrice() << std::endl;
 }
 void TaxableProduct::displayTab(){
     std::string prodID, prodName, price, quantity;

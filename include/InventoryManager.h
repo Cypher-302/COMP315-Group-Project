@@ -93,6 +93,22 @@ class InventoryManager
 
         bool removeProduct(const std::string &name);
 
+        /**
+            Loads all information about the products in productMap to ProductData.txt
+            @return 0 - successfull
+            @return 1 - failed
+            @return 2 - file not found
+        */
+        int storeMap();
+
+        /**
+            Loads all information about the products in ProductData.txt to productMap
+            @return 0 - successfull
+            @return 1 - failed
+            @return 2 - file not found
+        */
+        int loadMap();
+
     private:
         std::map<int, std::shared_ptr<Product>> productMap;
         mutable std::mutex mapMutex;

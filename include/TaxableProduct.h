@@ -51,6 +51,11 @@ public:
         Displays the tabulated version of all the product's details
     */
     void displayTab() override;
+    /**
+        Returns the type of the product
+        @return TaxableProduct
+    */
+    std::string getType() const override;
 };
 
 #endif // TAXABLEPRODUCT_H

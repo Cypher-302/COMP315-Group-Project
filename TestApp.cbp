@@ -34,6 +34,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="ProductData.txt" />
 		<Unit filename="include/DiscountedProduct.h" />
 		<Unit filename="include/InventoryManager.h" />
 		<Unit filename="include/Order.h" />

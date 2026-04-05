@@ -28,13 +28,18 @@ double DiscountedProduct::calculateFinalPrice(){
     return getPrice() - second;
 }
 
+ std::string DiscountedProduct::getType() const {
+        return "DiscountedProduct";
+}
+
+
 void DiscountedProduct::display(){
      std::cout << "ID: " << getId()
              << ", Name: " << getName()
              << ", Discount: " << getDiscount()
-             << ", Price: " << getPrice()
+             << "% , Price: R" << getPrice()
              << ", Quantity: " << getQuant()
-             << ", Final Price: " << calculateFinalPrice() << std::endl;
+             << ", Final Price: R" << calculateFinalPrice() << std::endl;
 }
 
 void DiscountedProduct::displayTab(){

@@ -327,7 +327,7 @@ int main()
         printRep(' ',' ',center); cout << "Select option: ";
         cin>>option;
 
-
+        //runs the sellected option
         switch(option){
             case 1: {
                 runPM(manager);

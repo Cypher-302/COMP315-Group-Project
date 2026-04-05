@@ -58,6 +58,10 @@ void Product::setID(int id){
     }
 }
 
+ std::string Product::getType() const {
+        return "Product";
+}
+
 double Product::calculateFinalPrice(){
     return price;
 }
@@ -65,9 +69,9 @@ double Product::calculateFinalPrice(){
 void Product::display(){
      std::cout << "ID: " << getId()
              << ", Name: " << getName()
-             << ", Price: " << getPrice()
+             << ", Price: R" << getPrice()
              << ", Quantity: " << getQuant()
-             << ", Final Price: " << calculateFinalPrice() << std::endl;
+             << ", Final Price: R" << calculateFinalPrice() << std::endl;
 
 }
 void Product::displayTab(){

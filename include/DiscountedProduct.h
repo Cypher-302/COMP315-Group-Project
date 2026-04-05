@@ -54,6 +54,11 @@ public:
     */
     void displayTab() override;
 
+    /**
+        Returns the type of the product
+        @return DiscountedProduct
+    */
+    std::string getType() const;
 };
 
 #endif // DISCOUNTEDPRODUCT_H

@@ -90,6 +90,12 @@ public:
     */
     virtual void displayTab();
 
+    /**
+        Returns the type of the product
+        @return Product
+    */
+    virtual std::string getType() const;
+
 
 };
 
