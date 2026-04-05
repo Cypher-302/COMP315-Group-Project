@@ -1,5 +1,7 @@
 #include "../include/InventoryManager.h"
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -121,6 +123,60 @@ bool InventoryManager::processOrder(int productId, int quantityRequested) {
 
     return false;
 }
+
+/**
+
+* displays product by price in ascending order
+
+*/
+void InventoryManager::sortAndDisplayProductByPrice(){
+
+    std::lock_guard<std::mutex> lock(mapMutex);
+
+    std::vector<std::shared_ptr<Product>> holder;
+if(productMap.empty()){cout<<"No products in inventory to be displayed";}else{
+
+    for(auto& e: productMap){
+        holder.push_back(e.second);
+    }
+    std::sort(holder.begin(),holder.end(), [](const std::shared_ptr<Product>& a,const std::shared_ptr<Product>& b)
+              {
+                  return (a->getPrice())< (b->getPrice());
+
+              } );
+    for(std::shared_ptr<Product>& p: holder){
+        p->display();
+    }
+}//end of ifelse
+}
+
+/**
+
+* displays product by quantity in ascending order
+
+*/
+void InventoryManager::sortAndDisplayProductByQuantity(){
+    std::lock_guard<std::mutex> lock(mapMutex);
+
+    std::vector<std::shared_ptr<Product>> holder;
+if(productMap.empty()){cout<<"No products in inventory to be displayed";}else{
+
+    for(auto& e: productMap){
+        holder.push_back(e.second);
+    }
+    std::sort(holder.begin(),holder.end(), [](const std::shared_ptr<Product>& a,const std::shared_ptr<Product>& b)
+              {
+                  return (a->getQuant())< (b->getQuant());
+
+              } );
+    for(std::shared_ptr<Product>& p: holder){
+        p->display();
+    }
+}//end of ifelse
+
+}
+
+
 
 bool InventoryManager::updateProduct(int productID, int newQuantity) {
     if(newQuantity < 0) return false;
