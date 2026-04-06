@@ -1,6 +1,10 @@
-Product#11111#Rolex#40#5600.5
-TaxableProduct#22222#T-Shirt#45#80#13.4
-Product#33333#Head Phones#16#750
-DiscountedProduct#44444#Sneakers#27#1375.5#15.6
-DiscountedProduct#55555#Samsung A16#106#2780.99#10.95
-DiscountedProduct#66666#MouseX17#35#115.99#8
+Product#1#2L Milk#30#35
+TaxableProduct#2#T-Shirt#45#80#13.4
+Product#3#30 Pack Eggs#16#90
+DiscountedProduct#4#Sneakers#27#1375.5#15.6
+DiscountedProduct#5#Samsung A16#106#2780.99#10.95
+DiscountedProduct#6#MouseX17#35#115.99#8
+TaxableProduct#7#Mouse#40#100.5#15
+TaxableProduct#8#Rolex#40#5600.5#15
+TaxableProduct#9#Soap#40#30.99#15
+TaxableProduct#10#Lindt Slab (100g)#40#100#15

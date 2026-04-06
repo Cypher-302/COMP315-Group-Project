@@ -33,14 +33,12 @@ OrderProcessor::~OrderProcessor()
 
 void OrderProcessor::runSimulation()
 {
-    const int NUM_THREADS = 5;
-
     // ensure the vector is empty for a new simulation
     workerThreads.clear();
 
     std::cout << "Beginning simulation with " << NUM_THREADS << " threads..." << std::endl;
 
-    for (int i; i < NUM_THREADS; i++)
+    for (int i = 0; i < NUM_THREADS; i++)
     {
         // instantiates a new workerThread at the back of the workerThreads vector
         workerThreads.emplace_back(&OrderProcessor::threadWorkerFunc, this);
@@ -59,7 +57,28 @@ void OrderProcessor::runSimulation()
 
 void OrderProcessor::displayHistory()
 {
-    // TODO
+    std::cout << "\n--- FINAL ORDER HISTORY SUMMARY ---" << std::endl;
+
+    if (orderHistory.empty()) // check if orderHistory vector empty to avoid errors
+    {
+        std::cout << "No orders were processed." << std::endl;
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock(historyMutex);
+    for (const auto &orderPtr : orderHistory)
+    {
+        if (orderPtr) // check orderPtr is not null
+        {
+            std::string statusStr = orderPtr->getOrderStatus() ? "SUCCESS" : "FAILED";
+
+            std::cout << "Order ID: " << orderPtr->getOrderID()
+                      << " | Product ID: " << orderPtr->getProductID()
+                      << " | Qty: " << orderPtr->getQuantityRequested()
+                      << " | Status: " << statusStr << std::endl;
+        }
+    }
+    std::cout << "-----------------------------------\n" << std::endl;
 }
 
 void OrderProcessor::threadWorkerFunc()
@@ -67,19 +86,18 @@ void OrderProcessor::threadWorkerFunc()
 
     for(int i = 0; i < ORDERS_PER_THREAD; i++){
 
-        //generate a random productID
-        int productId = rand() % 10 + 1;
-        int quantity = rand() % 5 + 1;  //generates a random quantity
+        int randomProductId = rand() % 10 + 1; //generate a random productID
+        int randomRequestedQuantity = rand() % 5 + 1;  //generates a random quantity
 
-        //tries to fulfill the order against the shared inventory. 
+        //tries to fulfill the order against the shared inventory.
         // returns true it there's sufficient stock
-        bool success = inventory->processOrder(productId, quantity);
+        bool success = inventory->processOrder(randomProductId, randomRequestedQuantity);
 
         //generates a unique Order ID across all threads
         static std::atomic<int> nextOrderID(1);
 
         //Construct the order record on the heap, the shared_ptr allows safety
-        auto order = std::make_shared<Order>(nextOrderID++, productId, quantity, success);
+        auto order = std::make_shared<Order>(nextOrderID++, randomProductId, randomRequestedQuantity, success);
 
         {
             std::lock_guard<std::mutex> lock(historyMutex);

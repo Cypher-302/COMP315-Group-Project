@@ -8,16 +8,16 @@
 #include "include/TaxableProduct.h"
 #include "include/InventoryManager.h"
 #include "include/Utility.h"
+#include "include/OrderProcessor.h"
 
 using namespace std;
 using namespace Utility;
 
-/**
-    Runs the Product Management aspect of program
-    @param products - Product vector
-*/
+
 map<int, shared_ptr<Product>> productMap;
-    InventoryManager manager(productMap);
+auto manager = std::make_shared<InventoryManager>(productMap);
+
+OrderProcessor orderProcessor(manager);
 
 void removeProduct(){
     int center = 20;
@@ -30,7 +30,7 @@ void removeProduct(){
 
     printRep(' ',' ',center);
     cout << "============================" << endl;
-    if(manager.removeProduct(productID)){
+    if(manager->removeProduct(productID)){
         cout << "====== PRODUCT REMOVED ======" << endl;
         printRep(' ',' ',center);
 
@@ -72,7 +72,7 @@ void getUpdate(){
     int quant;
     cin >> quant;
 
-    manager.updateProduct(productID, quant);
+    manager->updateProduct(productID, quant);
     printRep(' ',' ',center);
 
     cout << "Product Updated" << endl;
@@ -81,7 +81,7 @@ void getUpdate(){
 
 }
 
-void runPM(InventoryManager& manager){
+void runPM(std::shared_ptr<InventoryManager> manager){
     int option;
     const int center = 27;
     do {
@@ -154,7 +154,7 @@ void runPM(InventoryManager& manager){
 
             if(subOption == 1) {
 
-                manager.addNewProduct(make_shared<Product>(productName, productPrice, productID, productQuantity));
+                manager->addNewProduct(make_shared<Product>(productName, productPrice, productID, productQuantity));
 
             } else if(subOption == 2) {
 
@@ -163,7 +163,7 @@ void runPM(InventoryManager& manager){
                 cout << "Enter product discount: ";
                 cin >> productDiscount;
 
-                manager.addNewProduct(make_shared<DiscountedProduct>(productName, productPrice, productID, productQuantity, productDiscount));
+                manager->addNewProduct(make_shared<DiscountedProduct>(productName, productPrice, productID, productQuantity, productDiscount));
 
             }else if(subOption == 3) {
 
@@ -171,7 +171,7 @@ void runPM(InventoryManager& manager){
                 printRep(' ',' ',center);cout << "Enter product tax: ";
                 cin >> productTax;
 
-                manager.addNewProduct(make_shared<TaxableProduct>(productName, productPrice, productID, productQuantity,productTax));
+                manager->addNewProduct(make_shared<TaxableProduct>(productName, productPrice, productID, productQuantity,productTax));
             }
 
             cout<<"\n";
@@ -187,7 +187,7 @@ void runPM(InventoryManager& manager){
 
 		case 3:
 
-            manager.displayAllProducts();
+            manager->displayAllProducts();
             pause(1000);
 			break;
 
@@ -221,9 +221,9 @@ void runPM(InventoryManager& manager){
 
             cin >> subOption;
             if(subOption==1){
-                manager.sortAndDisplayProductByPrice();
+                manager->sortAndDisplayProductByPrice();
             }else if(subOption==2){
-                manager.sortAndDisplayProductByQuantity();
+                manager->sortAndDisplayProductByQuantity();
             }else{
                 cout<< "Invalid option Entered";
             }
@@ -232,7 +232,7 @@ void runPM(InventoryManager& manager){
 
 		case 6: {
 
-		   if(manager.displayAllProducts()){
+		   if(manager->displayAllProducts()){
                 getUpdate();
                 break;
 		    }
@@ -270,17 +270,20 @@ void runOP(){
     int option;
     const int center = 27;
 
-    do{
+    do
+    {
         line();
         cout<<"\n";
         printRep(' ',' ',center);
 		cout << "======= ORDER MENU ========" << endl;
 		printRep(' ',' ',center);
-		cout << "1. Display all queued Orders" << endl;
+		cout << "1. Display all queued orders" << endl;
 		printRep(' ',' ',center);
 		cout << "2. Process orders" << endl;
 		printRep(' ',' ',center);
 		cout << "3. Receive new orders into queue" << endl;
+		printRep(' ',' ',center);
+        cout << "4. View order history" << endl;
 		printRep(' ',' ',center);
 		cout << "0. Back\n" << endl;
 		printRep(' ',' ',center);
@@ -290,17 +293,43 @@ void runOP(){
 
 		cin >> option ;
 
-		switch(option){
+		switch(option)
+		{
+		    case 1:
+            {
+                cout << "Not implemented yet." << endl;
+                // TODO
+                break;
+            }
 
-            case 1:{break;}
+            case 2:
+            {
+                orderProcessor.runSimulation();
+                pause(1000);
+                break;
+            }
 
-            case 2:{break;}
+            case 3:
+            {
+                cout << "Not implemented yet." << endl;
+                // TODO
+                break;
+            }
 
-            case 3:{break;}
+            case 4:
+            {
+                orderProcessor.displayHistory();
+                pause(1000);
+                break;
+            }
 
-            case 0:{break;}
+            case 0:
+            {
+                break;
+            }
 
-            default: {
+            default:
+            {
                 cout<<"\n";
                 printRep(' ',' ',center); cout << "Invalid option. Try again.\n";
             }
@@ -313,47 +342,53 @@ void runOP(){
 
 int main()
 {
-
-
     int option;
+    const int reps = 65, center = 28; // UI layout constants
 
-
-	const int reps= 65, center = 28; // char repetitions
-
+    // welcome sequence
     printChars('*',' ',reps);
     printChars('*',' ',reps);
     pause(1000);
     printChars('=',' ',reps);
     printRep(' ',' ',center);
-    cout<< "Welcome to Nexus LogiQ\n";
-    cout<< "\n";
+    cout << "Welcome to Nexus LogiQ\n";
+    cout << "\n";
     printChars('=',' ',reps);
     printChars('*',' ',reps);
     printChars('*',' ',reps);
     pause(1000);
-       if(manager.loadMap() == 0){
-        std::cerr<<"Failed to load Inventory"<<endl;
-       }
+
+    // attempt to load exisiting data from persistence file
+    if (manager->loadMap() != 0)
+    {
+        std::cerr << "Failed to load Inventory. Starting with empty map." << endl;
+    }
 
     /* Main Menu and Options */
-
     do{
         line();
         cout<<"\n";
-        printRep(' ',' ',center);     cout<<"-----------------------------\n";
-        printRep(' ',' ',center - 1); cout<< "<| Nexus LogiQ Administration |>\n";
-        printRep(' ',' ',center);     cout<<"-----------------------------\n";
+        printRep(' ',' ',center);     cout <<"-----------------------------\n";
+        printRep(' ',' ',center - 1); cout << "<| Nexus LogiQ Administration |>\n";
+        printRep(' ',' ',center);     cout <<"-----------------------------\n";
 
         printRep(' ',' ',center); cout << "========== MENU ==========\n" << endl;
-        printRep(' ',' ',center); cout <<"1. Product Management Page\n";
-        printRep(' ',' ',center); cout<<"2. Order Processing Page\n";
-        printRep(' ',' ',center); cout<< "3. Help\n";
+        printRep(' ',' ',center); cout << "1. Product Management Page\n";
+        printRep(' ',' ',center); cout << "2. Order Processing Page\n";
+        printRep(' ',' ',center); cout << "3. Help\n";
         printRep(' ',' ',center); cout << "-1. Exit\n";
         printRep(' ',' ',center); cout << "===========================\n" << endl;
         printRep(' ',' ',center); cout << "Select option: ";
-        cin>>option;
 
-        //runs the sellected option
+        // input validation
+        if (!(cin >> option))
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            continue;
+        }
+
+        //runs the selected option
         switch(option){
             case 1: {
                 runPM(manager);
@@ -372,7 +407,7 @@ int main()
             case -1: {
                 cout<<"\n";
                 printRep(' ',' ',center); cout << "Exiting system...\n";
-                manager.storeMap();
+                manager->storeMap(); // save the current state of the inventory before closing
                 pause(1000);
                 break;
             }
@@ -383,12 +418,9 @@ int main()
                 break;
             }
         }
-
-
-
-        }while(option != -1);
-        cout<<"\n";
-        printRep(' ',' ',center); cout << "Hope you enjoyed using the system :) BYE!";
+    } while(option != -1);
+    cout<<"\n";
+    printRep(' ',' ',center); cout << "Hope you enjoyed using the system :) BYE!";
 	return 0;
 }
 

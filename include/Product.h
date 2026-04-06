@@ -1,6 +1,7 @@
 #ifndef PRODUCT_H
 #define PRODUCT_H
 
+#include <mutex>
 #include <string>
 
 class Product
@@ -10,7 +11,7 @@ private:
     double price;
     int productID;
     int quantity;
-   // std::mutex productMutex;
+    mutable std::mutex productMutex;
 
 
 public:
@@ -49,6 +50,12 @@ public:
         @return id
     */
     int getId() const;
+
+    /**
+     Returns a reference to the existing mutex.
+     Marked const because the mutex is mutable.
+     */
+    std::mutex& getProductMutex() const;
 
     /**
         Updates the name of this product

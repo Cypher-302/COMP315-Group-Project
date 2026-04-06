@@ -28,7 +28,12 @@ int Product::getId() const{
     return productID;
 }
 
-void Product:: setName(std::string the_name){
+std::mutex& Product::getProductMutex() const
+{
+    return productMutex;
+}
+
+void Product::setName(std::string the_name){
     name = the_name;
 }
 

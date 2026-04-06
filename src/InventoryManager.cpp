@@ -7,6 +7,7 @@
 #include "DiscountedProduct.h"
 #include "TaxableProduct.h"
 #include <sstream>
+#include <thread>
 
 using namespace Utility;
 
@@ -113,25 +114,51 @@ bool InventoryManager::displayAllProducts() const {
   * @param product id, quantity requested of the product
   * @return true if order is successfully processed, false otherwise
 */
-bool InventoryManager::processOrder(int productId, int quantityRequested) {
-
+bool InventoryManager::processOrder(int productId, int quantityRequested)
+{
     if(quantityRequested <= 0) return false;
 
-    std::lock_guard<std::mutex> lock(mapMutex);
+    std::shared_ptr<Product> targetProduct = nullptr;
 
-    auto it = productMap.find(productId);
-
-    if(it != productMap.end()) {
-
-        int quantity = it->second->getQuant();
-
-        if(quantity >= quantityRequested) {
-
-            it->second->setQuant(quantity - quantityRequested);
-            return true;
+    { // structural lock to find the product pointer and release the map lock ASAP
+        std::lock_guard<std::mutex> lock(mapMutex);
+        auto it = productMap.find(productId);
+        if (it != productMap.end())
+        {
+            targetProduct = it->second;
         }
     }
 
+    if (targetProduct) // null check
+    { // transactional lock to protect the specific product and print output
+        std::lock_guard<std::mutex> productLock(targetProduct->getProductMutex());
+
+        int currentStock = targetProduct->getQuant();
+
+        if (currentStock >= quantityRequested)
+        {
+            targetProduct->setQuant(currentStock - quantityRequested); // update stock
+
+            // interleaved output for success
+            std::cout << "[SUCCESS] Thread " << std::this_thread::get_id()
+                      << " | Product: " << targetProduct->getName()
+                      << " | Requested: " << quantityRequested
+                      << " | New Stock: " << targetProduct->getQuant() << std::endl;
+            return true;
+        }
+        else
+        {
+            // interleaved output for failure (insufficient stock)
+            std::cout << "[FAILED]  Thread " << std::this_thread::get_id()
+                      << " | Product: " << targetProduct->getName()
+                      << " | Insufficient Stock (" << currentStock << ")" << std::endl;
+            return false;
+        }
+    }
+
+    // interleaved output for failure (product not found)
+    std::cout << "[FAILED]  Thread " << std::this_thread::get_id()
+              << " | Product ID " << productId << " not found." << std::endl;
     return false;
 }
 
@@ -245,43 +272,62 @@ int InventoryManager::storeMap(){
     return 0;
 }
 
-int InventoryManager::loadMap(){
+int InventoryManager::loadMap()
+{
     std::ifstream file("ProductData.txt");
-    std::vector<string> hold;
-    int quant,id;
-    double price,discOrTax;
-    if(!file){return 1;}
-
-
+    if(!file) return 1; // if file doesn't exist, safely return
 
     std::string line, word;
-    while(std::getline(file,line)){
+    while(std::getline(file, line))
+    {
+        if(line.empty()) continue; // skip empty lines to prevent crashes
+
+        std::vector<string> hold; // automatically resets every line
         std::stringstream str(line);
-        while(std::getline(str,word,'#')){
+        while(std::getline(str, word, '#'))
+        {
             hold.push_back(word);
         }
 
-        //
-        quant = std::stoi(hold[3]);
-        price =std::stod(hold[4]);
-        id = std::stoi(hold[1]);
+        // ensure the line has the minimum required fields (Type, ID, Name, Quant, Price)
+        if(hold.size() < 5) continue;
 
-        if(hold[0]=="Product"){
-            addNewProduct(make_shared<Product>(hold[2], price, id, quant));
+        try
+        {
+            int id = std::stoi(hold[1]);
+            int quant = std::stoi(hold[3]);
+            double price = std::stod(hold[4]);
 
-        }else if(hold[0]=="DiscountedProduct"){
-            discOrTax = std::stod(hold[5]);
-            addNewProduct(make_shared<DiscountedProduct>(hold[2], price, id, quant,discOrTax));
-
-        }else{
-            discOrTax = std::stod(hold[5]);
-            addNewProduct(make_shared<TaxableProduct>(hold[2], price, id, quant, discOrTax));
+            if(hold[0] == "Product")
+            {
+                addNewProduct(make_shared<Product>(hold[2], price, id, quant));
+            }
+            else if(hold[0] == "DiscountedProduct")
+            {
+                double discount = 10; // default value
+                if(hold.size() >= 6) // ensure the 6th field (discount) exists
+                {
+                    discount = std::stod(hold[5]);
+                }
+                addNewProduct(make_shared<DiscountedProduct>(hold[2], price, id, quant, discount));
+            }
+            else if(hold[0] == "TaxableProduct")
+            {
+                double tax = 15; // default value
+                // Ensure the 6th field (tax) exists
+                if(hold.size() >= 6)
+                {
+                    tax = std::stod(hold[5]);
+                }
+                addNewProduct(make_shared<TaxableProduct>(hold[2], price, id, quant, tax));
+            }
         }
-        hold.clear();
-
+        catch(const std::exception& e)
+        {
+            // 4. If stoi or stod fail (e.g., text instead of numbers), safely ignore the line
+            std::cerr << "Error parsing line: " << line << std::endl;
+        }
     }
-
-
     return 0;
 }
 
