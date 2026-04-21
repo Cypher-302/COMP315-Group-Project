@@ -17,10 +17,10 @@ private:
 public:
     /**
         Constructs the Product object with the following details.
-        @param the_name     -
-        @param the_price    -
-        @param id           -
-        @param the_quantity -
+        @param the_name     - The string identifier representing the name of the product.
+        @param the_price    - The numerical value representing the unit cost of the product.
+        @param id           - The unique integer used to identify the product instance.
+        @param the_quantity - The integer count of the product units currently in stock.
     */
     Product(std::string the_name, double the_price, int id, int the_quantity);
 

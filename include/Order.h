@@ -10,10 +10,10 @@ private:
 public:
     /**
         Constructs an Order object with the following details.
-        @param oID  -
-        @param pID  -
-        @param qR   -
-        @param oS   -
+        @param oID  - The unique integer identifier for the order record.
+        @param pID  - The unique integer identifier for the associated product.
+        @param qR   - The integer count of product units requested in the order.
+        @param oS   - The boolean flag representing the fulfillment status of the order.
     */
     Order(int oID, int pID, int qR, bool oS);
 

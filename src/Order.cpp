@@ -39,10 +39,10 @@ int Order::getProductID(){
     return productID;
 }
 
-int Order::getQuantityRequested(){ /* const removed*/
+int Order::getQuantityRequested(){
     return quantityRequested;
 }
 
-bool Order::getOrderStatus(){ /* const removed*/
+bool Order::getOrderStatus(){
     return orderStatus;
 }

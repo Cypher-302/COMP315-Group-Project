@@ -701,3 +701,88 @@
 	"TaxableProduct.h"
 	<sstream>
 
+1776777620 source:c:\users\ultra\documents\github\comp315-group-project\main.cpp
+	<iostream>
+	<thread>
+	<vector>
+	<string>
+	"include/Product.h"
+	"include/DiscountedProduct.h"
+	"include/TaxableProduct.h"
+	"include/InventoryManager.h"
+	"include/Utility.h"
+	"include/OrderProcessor.h"
+
+1776778053 c:\users\ultra\documents\github\comp315-group-project\include\product.h
+	<mutex>
+	<string>
+
+1776778152 c:\users\ultra\documents\github\comp315-group-project\include\discountedproduct.h
+	"Product.h"
+	<string>
+
+1776777956 c:\users\ultra\documents\github\comp315-group-project\include\taxableproduct.h
+	"Product.h"
+	<string>
+
+1776777620 c:\users\ultra\documents\github\comp315-group-project\include\inventorymanager.h
+	<map>
+	<memory>
+	<mutex>
+	"Product.h"
+
+1775391185 c:\users\ultra\documents\github\comp315-group-project\include\utility.h
+	<string>
+	<vector>
+	"../include/Product.h"
+
+1775391185 c:\users\ultra\documents\github\comp315-group-project\include\orderprocessor.h
+	<vector>
+	<memory>
+	<thread>
+	<mutex>
+	<atomic>
+	"Order.h"
+	"InventoryManager.h"
+
+1776778051 c:\users\ultra\documents\github\comp315-group-project\include\order.h
+	<string>
+
+1776777620 source:c:\users\ultra\documents\github\comp315-group-project\src\discountedproduct.cpp
+	"../include/DiscountedProduct.h"
+	<iostream>
+	<string>
+	"../include/Utility.h"
+
+1776777620 source:c:\users\ultra\documents\github\comp315-group-project\src\inventorymanager.cpp
+	"../include/InventoryManager.h"
+	<iostream>
+	<vector>
+	<algorithm>
+	"../include/Utility.h"
+	<fstream>
+	"DiscountedProduct.h"
+	"TaxableProduct.h"
+	<sstream>
+	<thread>
+
+1776777620 source:c:\users\ultra\documents\github\comp315-group-project\src\orderprocessor.cpp
+	"../include/OrderProcessor.h"
+	<cstdlib>
+	<iostream>
+	<memory>
+	<mutex>
+	<thread>
+
+1776777620 source:c:\users\ultra\documents\github\comp315-group-project\src\product.cpp
+	<iostream>
+	"../include/Product.h"
+	<string>
+	"../include/Utility.h"
+
+1776777620 source:c:\users\ultra\documents\github\comp315-group-project\src\taxableproduct.cpp
+	<string>
+	"../include/TaxableProduct.h"
+	<iostream>
+	"../include/Utility.h"
+
