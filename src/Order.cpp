@@ -32,18 +32,18 @@ void Order::setOrderStatus(bool oS) {
     this->orderStatus = oS;
 }
 
-int Order::getOrderID(){
+int Order::getOrderID() const{
     return orderID;
 }
 
-int Order::getProductID(){
+int Order::getProductID() const{
     return productID;
 }
 
-int Order::getQuantityRequested(){
+int Order::getQuantityRequested() const{
     return quantityRequested;
 }
 
-bool Order::getOrderStatus(){
+bool Order::getOrderStatus() const{
     return orderStatus;
 }

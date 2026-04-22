@@ -5,6 +5,8 @@
 #include <memory>
 #include <mutex>
 #include <thread>
+#include <ctime>
+#include <functional>
 
 OrderProcessor::OrderProcessor(std::shared_ptr<InventoryManager> inv) : inventory(inv)
 {
@@ -84,25 +86,39 @@ void OrderProcessor::displayHistory()
 
 void OrderProcessor::threadWorkerFunc()
 {
+    // give each thread a random, unique seed for the random function
+    std::hash<std::thread::id> hasher;
+    std::srand(std::time(nullptr) + hasher(std::this_thread::get_id()));
 
     for(int i = 0; i < ORDERS_PER_THREAD; i++){
 
-        int randomProductId = rand() % 10 + 1; //generate a random productID
-        int randomRequestedQuantity = rand() % 5 + 1;  //generates a random quantity
+        int randomProductId = 1 + rand() % 10; // generates a random productID [1,10]
 
-        //tries to fulfill the order against the shared inventory.
+        const int MIN_REQUEST_QUANTITY = -5; // effectively a restock
+        const int MAX_REQUEST_QUANTITY = 15;
+
+        int randomRequestedQuantity = MIN_REQUEST_QUANTITY + std::rand() % (MAX_REQUEST_QUANTITY - MIN_REQUEST_QUANTITY + 1);  // generates a random quantity [Min,Max]
+
+        if (randomRequestedQuantity == 0) randomRequestedQuantity = 1;
+
+        // tries to fulfill the order against the shared inventory.
         // returns true it there's sufficient stock
         bool success = inventory->processOrder(randomProductId, randomRequestedQuantity);
 
-        //generates a unique Order ID across all threads
+        // generates a unique Order ID across all threads
         static std::atomic<int> nextOrderID(1);
 
-        //Construct the order record on the heap, the shared_ptr allows safety
+        // construct the order record on the heap, the shared_ptr allows safety
         auto order = std::make_shared<Order>(nextOrderID++, randomProductId, randomRequestedQuantity, success);
 
         {
             std::lock_guard<std::mutex> lock(historyMutex);
             orderHistory.push_back(order);
         }
+
+        // forces the thread to sleep for a random time between 10ms and 50ms
+        // simulates network delay and task processing speeds, shows interleaved output more clearly
+        int sleepTime = 10 + (std::rand() % 41);
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
     }
 }
