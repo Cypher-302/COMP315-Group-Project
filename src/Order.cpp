@@ -1,5 +1,6 @@
-#include <string>
 #include "../include/Order.h"
+
+#include <string>
 
 Order::Order(int oID, int pID, int qR, bool oS) {
     orderID = oID;

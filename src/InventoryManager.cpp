@@ -1,11 +1,12 @@
+#include "../include/DiscountedProduct.h"
+#include "../include/TaxableProduct.h"
 #include "../include/InventoryManager.h"
+#include "../include/Utility.h"
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "../include/Utility.h"
 #include <fstream>
-#include "DiscountedProduct.h"
-#include "TaxableProduct.h"
 #include <sstream>
 #include <thread>
 

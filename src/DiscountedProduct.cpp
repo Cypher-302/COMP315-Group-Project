@@ -1,7 +1,8 @@
 #include "../include/DiscountedProduct.h"
+#include "../include/Utility.h"
+
 #include <iostream>
 #include <string>
-#include "../include/Utility.h"
 
 using namespace Utility;
 DiscountedProduct::DiscountedProduct(std::string the_name, double the_price, int id, int the_quantity, double the_discount)

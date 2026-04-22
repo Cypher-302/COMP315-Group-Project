@@ -1,11 +1,12 @@
-#include "Utility.h"
+#include "../include/Utility.h"
+#include "../include/Product.h"
+
 #include <iostream>
 #include <thread>
 #include <ctime>
 #include <chrono>
 #include <vector>
 #include <string>
-#include "../include/Product.h"
 
 namespace Utility
 {
@@ -35,7 +36,7 @@ namespace Utility
 
     void line(){
         std::cout<<"\n";
-        printChars('«','»',65); // from reps
+        printChars('ï¿½','ï¿½',65); // from reps
         std::cout<<"\n";
     }
 
