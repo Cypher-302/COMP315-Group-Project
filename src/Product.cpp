@@ -33,6 +33,13 @@ std::mutex& Product::getProductMutex() const
     return productMutex;
 }
 
+std::atomic<bool> Product::getActive() const {
+    return true;
+}
+void Product::setActive(std::atomic<bool> active){
+    active = true;
+}
+
 void Product::setName(std::string the_name){
     name = the_name;
 }

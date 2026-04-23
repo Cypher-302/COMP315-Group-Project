@@ -3,6 +3,7 @@
 
 #include <mutex>
 #include <string>
+#include <atomic>
 
 class Product
 {
@@ -12,6 +13,7 @@ private:
     int productID;
     int quantity;
     mutable std::mutex productMutex;
+    std::atomic<bool> active; // A boolean flag that represents whether a product is still valid/ in-use
 
 
 public:
@@ -56,6 +58,18 @@ public:
      Marked const because the mutex is mutable.
      */
     std::mutex& getProductMutex() const;
+
+    /**
+        Returns wheteher a product is still valid.
+        @return active 
+     */
+    std::atomic<bool> getActive() const;
+
+    /**
+        set the status of the product to true 
+        @param active 
+     */
+    void setActive(std::atomic<bool> active);
 
     /**
         Updates the name of this product

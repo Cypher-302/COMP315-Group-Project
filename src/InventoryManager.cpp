@@ -4,8 +4,8 @@
 #include <algorithm>
 #include "../include/Utility.h"
 #include <fstream>
-#include "DiscountedProduct.h"
-#include "TaxableProduct.h"
+#include "../include/DiscountedProduct.h"
+#include "../include/TaxableProduct.h"
 #include <sstream>
 #include <thread>
 
@@ -51,11 +51,12 @@ bool InventoryManager::addNewProduct(shared_ptr<Product> product) {
 */
 bool InventoryManager::removeProduct(int productId) {
 
-    std::lock_guard<std::mutex> lockMap(mapMutex);
+    std::lock_guard<std::mutex> lock(mapMutex);
 
     auto it = productMap.find(productId);
 
     if(it != productMap.end()) {
+        it->second->getActive() = true;
         productMap.erase(it);
         return true;
     }
