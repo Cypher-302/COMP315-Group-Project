@@ -13,12 +13,12 @@ public:
 
     /**
     Constructs a TaxableProduct object with the following details.
-    @param the_name     -
-    @param the_price    -
-    @param id           -
-    @param the_quantity -
-    @param the_tax      -
 
+    @param the_name     - The string identifier representing the product name.
+    @param the_price    - The base unit price of the product excluding tax.
+    @param id           - The unique integer identifier assigned to the product.
+    @param the_quantity - The total number of units available in inventory.
+    @param the_tax      - The decimal value representing the tax rate applied to the product.
     */
 
     TaxableProduct(std::string the_name, double the_price, int id, int the_quantity, double the_tax);

@@ -1,7 +1,8 @@
-#include <iostream>
 #include "../include/Product.h"
-#include <string>
 #include "../include/Utility.h"
+
+#include <iostream>
+#include <string>
 
 using namespace Utility;
 

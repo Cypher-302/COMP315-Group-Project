@@ -1,7 +1,8 @@
-#include <string>
 #include "../include/TaxableProduct.h"
-#include <iostream>
 #include "../include/Utility.h"
+
+#include <string>
+#include <iostream>
 
 using namespace Utility;
 

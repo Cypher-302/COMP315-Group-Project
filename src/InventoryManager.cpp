@@ -1,11 +1,17 @@
+#include "../include/DiscountedProduct.h"
+#include "../include/TaxableProduct.h"
 #include "../include/InventoryManager.h"
+#include "../include/Utility.h"
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "../include/Utility.h"
 #include <fstream>
+<<<<<<< HEAD
 #include "../include/DiscountedProduct.h"
 #include "../include/TaxableProduct.h"
+=======
+>>>>>>> 0196a8dae8e9dbc9dcdcc3fef27d6913b1eccc64
 #include <sstream>
 #include <thread>
 
@@ -117,8 +123,6 @@ bool InventoryManager::displayAllProducts() const {
 */
 bool InventoryManager::processOrder(int productId, int quantityRequested)
 {
-    if(quantityRequested <= 0) return false;
-
     std::shared_ptr<Product> targetProduct = nullptr;
 
     { // structural lock to find the product pointer and release the map lock ASAP
@@ -130,26 +134,42 @@ bool InventoryManager::processOrder(int productId, int quantityRequested)
         }
     }
 
+    // A static mutex to safely lock the std::cout stream across all threads,
+    //  preventing race conditions for standard output
+    static std::mutex coutMutex;
+
     if (targetProduct) // null check
     { // transactional lock to protect the specific product and print output
         std::lock_guard<std::mutex> productLock(targetProduct->getProductMutex());
 
         int currentStock = targetProduct->getQuant();
 
-        if (currentStock >= quantityRequested)
+        if (quantityRequested < 0) // handle restocking
+        {
+            // subtracting a negative number adds it, so this still works:
+            targetProduct->setQuant(currentStock - quantityRequested); // update stock
+
+            std::lock_guard<std::mutex> printLock(coutMutex);
+            std::cout << "[RESTOCK] Thread " << std::this_thread::get_id()
+                      << " | Product: " << targetProduct->getName()
+                      << " | Added: " << (-quantityRequested) // make positive for terminal output
+                      << " | New Stock: " << targetProduct->getQuant() << std::endl;
+            return true;
+        }
+        else if (currentStock >= quantityRequested) // handle successful purchases
         {
             targetProduct->setQuant(currentStock - quantityRequested); // update stock
 
-            // interleaved output for success
+            std::lock_guard<std::mutex> printLock(coutMutex);
             std::cout << "[SUCCESS] Thread " << std::this_thread::get_id()
                       << " | Product: " << targetProduct->getName()
                       << " | Requested: " << quantityRequested
                       << " | New Stock: " << targetProduct->getQuant() << std::endl;
             return true;
         }
-        else
+        else // handle failed purchases
         {
-            // interleaved output for failure (insufficient stock)
+            std::lock_guard<std::mutex> printLock(coutMutex);
             std::cout << "[FAILED]  Thread " << std::this_thread::get_id()
                       << " | Product: " << targetProduct->getName()
                       << " | Insufficient Stock (" << currentStock << ")" << std::endl;
@@ -157,7 +177,7 @@ bool InventoryManager::processOrder(int productId, int quantityRequested)
         }
     }
 
-    // interleaved output for failure (product not found)
+    std::lock_guard<std::mutex> printLock(coutMutex);
     std::cout << "[FAILED]  Thread " << std::this_thread::get_id()
               << " | Product ID " << productId << " not found." << std::endl;
     return false;
@@ -315,7 +335,7 @@ int InventoryManager::loadMap()
             else if(hold[0] == "TaxableProduct")
             {
                 double tax = 15; // default value
-                // Ensure the 6th field (tax) exists
+                // ensure the 6th field (tax) exists
                 if(hold.size() >= 6)
                 {
                     tax = std::stod(hold[5]);
@@ -325,7 +345,7 @@ int InventoryManager::loadMap()
         }
         catch(const std::exception& e)
         {
-            // 4. If stoi or stod fail (e.g., text instead of numbers), safely ignore the line
+            // if stoi or stod fail (e.g., text instead of numbers), safely ignore the line
             std::cerr << "Error parsing line: " << line << std::endl;
         }
     }
@@ -333,4 +353,3 @@ int InventoryManager::loadMap()
 }
 
 InventoryManager::~InventoryManager(){}
-

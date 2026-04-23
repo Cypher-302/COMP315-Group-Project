@@ -10,10 +10,10 @@ private:
 public:
     /**
         Constructs an Order object with the following details.
-        @param oID  -
-        @param pID  -
-        @param qR   -
-        @param oS   -
+        @param oID  - The unique integer identifier for the order record.
+        @param pID  - The unique integer identifier for the associated product.
+        @param qR   - The integer count of product units requested in the order.
+        @param oS   - The boolean flag representing the fulfillment status of the order.
     */
     Order(int oID, int pID, int qR, bool oS);
 
@@ -48,24 +48,24 @@ public:
         Gets the ID of this order.
         @return orderID
     */
-    int getOrderID();
+    int getOrderID() const;
 
     /**
         Gets the ID of a specified product in this order
         @return productID
     */
-    int getProductID();
+    int getProductID() const;
 
     /**
         Gets the user requested quantity of a product in this order.
         @return quantityRequsted
     */
-    int getQuantityRequested();
+    int getQuantityRequested() const;
 
     /**
         Gets the status of this order.
         @return orderStatus
     */
-    bool getOrderStatus();
+    bool getOrderStatus() const;
 
 };

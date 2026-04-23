@@ -1,5 +1,6 @@
-#include <string>
 #include "../include/Order.h"
+
+#include <string>
 
 Order::Order(int oID, int pID, int qR, bool oS) {
     orderID = oID;
@@ -31,18 +32,18 @@ void Order::setOrderStatus(bool oS) {
     this->orderStatus = oS;
 }
 
-int Order::getOrderID(){
+int Order::getOrderID() const{
     return orderID;
 }
 
-int Order::getProductID(){
+int Order::getProductID() const{
     return productID;
 }
 
-int Order::getQuantityRequested(){ /* const removed*/
+int Order::getQuantityRequested() const{
     return quantityRequested;
 }
 
-bool Order::getOrderStatus(){ /* const removed*/
+bool Order::getOrderStatus() const{
     return orderStatus;
 }

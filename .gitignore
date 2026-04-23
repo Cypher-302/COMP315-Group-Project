@@ -1,6 +1,16 @@
-# Manually added
-TestApp.layout
+# - Project Specific -
+# Code::Blocks user/auto-generated files
+*.layout
+*.depend
 
+# Visual Studio debug symbols
+*.pdb
+
+# Directories to ignore
+.vscode/
+obj/
+
+# - Standard C++ Ignore Rules -
 # Prerequisites
 *.d
 
