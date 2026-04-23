@@ -39,7 +39,7 @@ std::atomic<bool> Product::getActive() const {
 }
 void Product::setActive(std::atomic<bool> active){
     active = true;
-}
+} 
 
 void Product::setName(std::string the_name){
     name = the_name;

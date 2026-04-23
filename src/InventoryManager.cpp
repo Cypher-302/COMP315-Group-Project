@@ -7,11 +7,10 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
-<<<<<<< HEAD
+
 #include "../include/DiscountedProduct.h"
 #include "../include/TaxableProduct.h"
-=======
->>>>>>> 0196a8dae8e9dbc9dcdcc3fef27d6913b1eccc64
+
 #include <sstream>
 #include <thread>
 
@@ -61,7 +60,7 @@ bool InventoryManager::removeProduct(int productId) {
 
     auto it = productMap.find(productId);
 
-    if(it != productMap.end()) {
+    if(it != productMap.end() && it->second) {
         it->second->getActive() = true;
         productMap.erase(it);
         return true;
@@ -104,9 +103,9 @@ bool InventoryManager::displayAllProducts() const {
 
 
     // prepare table
-        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
-        printRep(' ',' ',14 -1); std::cout<<"| Product ID          | Product Name        | Price               | Quantity            | Final Price         |"; std::cout<<"\n";
-        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
+    printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
+    printRep(' ',' ',14 -1); std::cout<<"| Product ID          | Product Name        | Price               | Quantity            | Final Price         |"; std::cout<<"\n";
+    printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
     for(auto p : productMap) {
         p.second->displayTab();
 

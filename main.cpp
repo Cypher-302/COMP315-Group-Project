@@ -175,8 +175,19 @@ void runPM(std::shared_ptr<InventoryManager> manager){
 		}
 
 		case 2:
-            // We still need to look at the "Remove Product" Implementation
-            removeProduct();
+
+            int productID;
+            cout<<"\n";
+			printRep(' ',' ',CENTER);
+            cout << "Enter ID of the product you want to remove: ";
+            cin >> productID;
+
+            if(manager->removeProduct(productID)) {
+                cout << "Product successfully removed!" << endl;
+            } else {
+                cout << "Operation failed" << endl;
+            }
+
 			break;
 
 		case 3:
@@ -188,15 +199,15 @@ void runPM(std::shared_ptr<InventoryManager> manager){
 
 		case 4: {
 
-			string productName;
+			int productID;
 			cout<<"\n";
 			printRep(' ',' ',CENTER);
-			cout << "Enter the name of the product you are looking for: ";
-			cin >> productName;
+			cout << "Enter the ID of the product you are looking for: ";
+			cin >> productID;
 
-			/**
-			@todo insert search code
-			*/
+            cout<<"\n";
+			printRep(' ',' ',CENTER);
+			manager->searchProductById(productID)->displayTab();
 			break;
 		}
 		case 5: {
