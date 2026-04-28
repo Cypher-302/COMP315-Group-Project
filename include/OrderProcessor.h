@@ -6,6 +6,7 @@
 #include <thread>
 #include <mutex>
 #include <atomic>
+#include <queue>
 #include "Order.h"
 #include "InventoryManager.h"
 
@@ -37,6 +38,34 @@ class OrderProcessor final
              orderHistory vector
         */
         void displayHistory();
+
+        /**
+            @brief Adds a manually created order to the processing queue.
+            Receives order details from user input (typically from the menu),
+             constructs an Order object, and adds it to the queue for later processing.
+            Thread-safe - uses queueMutex to protect concurrent access.
+            @param order Shared pointer to the Order object to be queued
+        */
+        void addOrder(std::shared_ptr<Order> order);
+
+        /**
+            @brief Displays all orders currently waiting in the queue.
+            Iterates through the orderQueue and prints details of each order
+             including Order ID, Product ID, and Quantity Requested.
+            If the queue is empty, displays an appropriate message.
+            Thread-safe - locks queueMutex before accessing the queue.
+        */
+        void displayQueue();
+
+        /**
+            @brief Processes all orders currently in the queue sequentially.
+            Takes each order from the front of the queue, attempts to fulfill it
+             using the shared InventoryManager, and adds the processed order
+             to the orderHistory vector.
+            Orders are removed from the queue after processing.
+            Thread-safe - protects both the queue and history operations.
+        */
+        void processQueue();
     protected:
 
     private:
@@ -44,6 +73,8 @@ class OrderProcessor final
         std::vector<std::shared_ptr<Order>> orderHistory;
         std::mutex historyMutex;
         std::vector<std::thread> workerThreads;
+        std::queue<std::shared_ptr<Order>> orderQueue;  // For manual orders
+        std::mutex queueMutex;
 
         static constexpr int TOTAL_REQUIRED_ORDERS = 20;
         static constexpr int NUM_THREADS = 5;

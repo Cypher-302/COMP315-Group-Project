@@ -302,8 +302,8 @@ void runOP(){
 		{
 		    case 1:
             {
-                cout << "Not implemented yet." << endl;
-                // TODO
+                orderProcessor.displayQueue();
+                pause(1000);
                 break;
             }
 
@@ -316,8 +316,27 @@ void runOP(){
 
             case 3:
             {
-                cout << "Not implemented yet." << endl;
-                // TODO
+                cout << "\n====== NEW ORDER ENTRY ======" << endl;
+
+                int prodID, quantity;
+                static int nextOrderID = 1000; // Start manual order IDs from 1000
+
+                printRep(' ', ' ', CENTER);
+                cout << "Enter Product ID: ";
+                cin >> prodID;
+
+                printRep(' ', ' ', CENTER);
+                cout << "Enter Quantity: ";
+                cin >> quantity;
+
+                // Create new order (status = false means pending/not yet processed)
+                auto newOrder = make_shared<Order>(nextOrderID++, prodID, quantity, false);
+
+                // Add to queue
+                orderProcessor.addOrder(newOrder);
+
+                cout << "\nOrder queued! Use 'Process orders' to fulfill it." << endl;
+                pause(1000);
                 break;
             }
 

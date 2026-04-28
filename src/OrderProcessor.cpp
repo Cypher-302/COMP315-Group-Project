@@ -34,6 +34,130 @@ OrderProcessor::~OrderProcessor()
     //  they go out of scope
 }
 
+void OrderProcessor::addOrder(std::shared_ptr<Order> order){
+     // Validate that the order pointer is not null
+    if (!order) {
+        std::cout << "Error: Cannot add null order to queue!" << std::endl;
+        return;
+    }
+
+    // Lock the queue mutex to ensure thread-safe insertion
+    std::lock_guard<std::mutex> lock(queueMutex);
+
+    // Add the order to the back of the queue
+    orderQueue.push(order);
+
+    std::cout << "Order #" << order->getOrderID()
+              << " added to queue successfully." << std::endl;
+}
+
+void OrderProcessor::displayQueue() {
+    // Lock the queue to prevent modifications during display
+    std::lock_guard<std::mutex> lock(queueMutex);
+
+    // Check if queue is empty
+    if (orderQueue.empty())
+    {
+        std::cout << "\n--- ORDER QUEUE ---" << std::endl;
+        std::cout << "No orders are currently queued." << std::endl;
+        std::cout << "-------------------\n" << std::endl;
+        return;
+    }
+
+    // Display header
+    std::cout << "\n--- ORDER QUEUE (" << orderQueue.size() << " orders) ---" << std::endl;
+    std::cout << "Pos | Order ID | Product ID | Quantity | Status" << std::endl;
+    std::cout << "------------------------------------------------" << std::endl;
+
+    // We need to make a copy to iterate since queue's don't support iteration
+    std::queue<std::shared_ptr<Order>> tempQueue = orderQueue;
+    int position = 1;
+
+    // Display each order in the queue
+    while (!tempQueue.empty())
+    {
+        auto order = tempQueue.front();
+        tempQueue.pop();
+
+        if (order)
+        {
+            std::string statusStr = order->getOrderStatus() ? "Processed" : "Pending";
+
+            std::cout << " " << position << "   | "
+                      << order->getOrderID() << "        | "
+                      << order->getProductID() << "          | "
+                      << order->getQuantityRequested() << "        | "
+                      << statusStr << std::endl;
+        }
+        position++;
+    }
+    std::cout << "------------------------------------------------\n" << std::endl;
+}
+
+void OrderProcessor::processQueue(){
+
+    // Lock the queue mutex for the entire processing operation
+    // to prevent new orders being added while processing
+    std::lock_guard<std::mutex> queueLock (queueMutex);
+
+     if (orderQueue.empty())
+    {
+        std::cout << "No orders in queue to process." << std::endl;
+        return;
+    }
+
+     std::cout << "\nProcessing " << orderQueue.size() << " queued orders..." << std::endl;
+
+    //Keep track of the processing and processing status of the orders
+    int processed = 0;
+    int successful = 0;
+    int failed = 0;
+
+     // Process each order in the queue
+    while (!orderQueue.empty())
+    {
+        // Get the next order from the front of the queue
+        auto order = orderQueue.front();
+        orderQueue.pop();
+
+        if (!order)
+        {
+            std::cout << "Warning: Skipping null order in queue." << std::endl;
+            continue;
+        }
+
+        // Attempt to fulfill the order using the inventory manager
+        bool success = inventory->processOrder(
+            order->getProductID(),
+            order->getQuantityRequested()
+        );
+
+        // Update order status based on fulfillment result
+        order->setOrderStatus(success);
+
+        // Add processed order to history (thread-safe)
+        {
+            std::lock_guard<std::mutex> historyLock(historyMutex);
+            orderHistory.push_back(order);
+        }
+
+        // Update counters
+        processed++;
+        if (success) successful++;
+        else failed++;
+
+        std::cout << "Order #" << order->getOrderID()
+                  << (success ? " - SUCCESS" : " - FAILED") << std::endl;
+    }
+
+    // Display processing summary
+    std::cout << "\nQueue processing complete!" << std::endl;
+    std::cout << "Total processed: " << processed << std::endl;
+    std::cout << "Successful: " << successful << std::endl;
+    std::cout << "Failed: " << failed << std::endl;
+    std::cout << "Remaining in queue: " << orderQueue.size() << "\n" << std::endl;
+}
+
 void OrderProcessor::runSimulation()
 {
     // ensure the vector is empty for a new simulation
