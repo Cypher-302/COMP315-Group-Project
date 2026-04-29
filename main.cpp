@@ -310,6 +310,7 @@ void runOP(OrderProcessor& orderProcessor){
 
             case 3:
             {
+                printRep(' ',' ',CENTER);
                 cout << "\n====== NEW ORDER ENTRY ======" << endl;
 
                 int prodID, quantity;
@@ -328,7 +329,7 @@ void runOP(OrderProcessor& orderProcessor){
 
                 // Add to queue
                 orderProcessor.addOrder(newOrder);
-
+                printRep(' ',' ',CENTER);
                 cout << "\nOrder queued! Use 'Process orders' to fulfill it." << endl;
                 pause(1000);
                 break;
@@ -362,7 +363,7 @@ int main()
 {
     // resizes the window to 128 cols and 30 rows to fit our console output
     setupTerminal();
-    
+
     int option;
     const int REPS = 65, CENTER = 28; // UI layout constants
 
