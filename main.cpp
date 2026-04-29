@@ -201,7 +201,7 @@ void runPM(std::shared_ptr<InventoryManager> manager){
 
             cout<<"\n";
 			printRep(' ',' ',CENTER);
-			manager->searchProductById(productID)->displayTab();
+			manager->searchProductById(productID)->display();
 			break;
 		}
 		case 5: {
