@@ -13,13 +13,7 @@
 using namespace std;
 using namespace Utility;
 
-
-map<int, shared_ptr<Product>> productMap;
-auto manager = std::make_shared<InventoryManager>(productMap);
-
-OrderProcessor orderProcessor(manager);
-
-void removeProduct(){
+void removeProduct(std::shared_ptr<InventoryManager> manager){
     const int CENTER = 20;
     cout << "====== PRODUCT SEARCH ======" << endl;
     printRep(' ',' ',CENTER);
@@ -50,7 +44,7 @@ void removeProduct(){
 
 }
 
-void getUpdate(){
+void getUpdate(std::shared_ptr<InventoryManager> manager){
     const int CENTER = 20;
     printRep(' ',' ',CENTER);
     cout << "========== Search / Update Product ==========" << endl;
@@ -238,7 +232,7 @@ void runPM(std::shared_ptr<InventoryManager> manager){
 		case 6: {
 
 		   if(manager->displayAllProducts()){
-                getUpdate();
+                getUpdate(manager);
                 break;
 		    }
 
@@ -271,7 +265,7 @@ void runPM(std::shared_ptr<InventoryManager> manager){
 /**
     Runs the Order Processing aspect of the program
 */
-void runOP(){
+void runOP(OrderProcessor& orderProcessor){
     int option;
     const int CENTER = 27;
 
@@ -366,6 +360,9 @@ void runOP(){
 
 int main()
 {
+    // resizes the window to 128 cols and 30 rows to fit our console output
+    setupTerminal();
+    
     int option;
     const int REPS = 65, CENTER = 28; // UI layout constants
 
@@ -381,6 +378,12 @@ int main()
     printChars('*',' ',REPS);
     printChars('*',' ',REPS);
     pause(1000);
+
+    // Create important objects
+    map<int, shared_ptr<Product>> productMap;
+    auto manager = std::make_shared<InventoryManager>(productMap);
+    OrderProcessor orderProcessor(manager);
+    // Finished creating important objects
 
     // attempt to load exisiting data from persistence file
     if (manager->loadMap() != 0)
@@ -419,7 +422,7 @@ int main()
                 break;
             }
             case 2: {
-                runOP();
+                runOP(orderProcessor);
                 break;
             }
             case 3:{

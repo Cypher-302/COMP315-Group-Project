@@ -8,6 +8,12 @@
 #include <vector>
 #include <string>
 
+// this header is only included if we are on Windows
+#ifdef _WIN32
+    #define WIN32_LEAN_AND_MEAN
+    #include <windows.h>
+#endif
+
 namespace Utility
 {
     void pause(int mSec){
@@ -47,25 +53,34 @@ namespace Utility
         }
     }
 
-    /*void displayAllProds(std::vector<Product> &prods){
-        std::string prodID, prodName, price, quantity;
+    void setupTerminal()
+    {
+    #ifdef _WIN32
+        // this code ONLY exists for the compiler if the OS is Windows
 
-        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
-        printRep(' ',' ',14 -1); std::cout<<"| Product ID          | Product Name        | Price               | Quantity            | Final Price          |"; std::cout<<"\n";
-        printRep(' ',' ',14); printRep('_','_',55);std::cout<<"\n";
-        for(Product p: prods){
-            prodID = to_string(p.getId());
-            prodName = p.getName();
-            quantity = to_string(p.getQuant());
-            price = to_string(p.calculateFinalPrice());
-            //ensure size
-            fillString(&prodID);fillString(&prodName);fillString(&quantity);fillString(&price);
-            // print row
-            printRep(' ',' ',14 -1);
-            std::cout<<"| "<<prodID<<"| "<<prodName<<"| "<<price<<"| "<<quantity<<"|\n";
-            printRep(' ',' ',14); printRep('_','_',44);std::cout<<"\n";
+        // gets a handle to stdout
+        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
+        // 32 bit unsigned int to store current console settings
+        DWORD dwMode = 0;
+
+        // copies current console settings to dwMode
+        if (GetConsoleMode(hOut, &dwMode)) {
+
+            // bitwise OR (|=) to add permission to process ANSI escape sequences
+            dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+
+            // set current console settings to the one we modified
+            SetConsoleMode(hOut, dwMode);
         }
-    }*/
+
+        // resize command
+        std::cout << "\x1b[8;30;128t";
+    #else
+        // this code runs on Linux, macOS, etc.
+        std::cout << "Non-Windows system detected. Using standard resize." << std::endl;
+        std::cout << "\e[8;30;128t";
+    #endif
+    }
 }
 

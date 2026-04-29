@@ -100,20 +100,20 @@ void OrderProcessor::processQueue(){
     // to prevent new orders being added while processing
     std::lock_guard<std::mutex> queueLock (queueMutex);
 
-     if (orderQueue.empty())
+    if (orderQueue.empty())
     {
         std::cout << "No orders in queue to process." << std::endl;
         return;
     }
 
-     std::cout << "\nProcessing " << orderQueue.size() << " queued orders..." << std::endl;
+    std::cout << "\nProcessing " << orderQueue.size() << " queued orders..." << std::endl;
 
     //Keep track of the processing and processing status of the orders
     int processed = 0;
     int successful = 0;
     int failed = 0;
 
-     // Process each order in the queue
+    // Process each order in the queue
     while (!orderQueue.empty())
     {
         // Get the next order from the front of the queue

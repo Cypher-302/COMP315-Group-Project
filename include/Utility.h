@@ -47,13 +47,8 @@ namespace Utility
         */
         void fillString(std::string &str);
 
-
-        // ######### This will probably be replaced by a method in the InventoryManager class #########
-        /**
-            Displays information of all products in a table format
-            @param prods - a reference to the vector of products
-        */
-        //void displayAllProds(const std::vector<Product> &prods);
+        // resizes terminal to fit our console output
+        void setupTerminal();
 };
 
 #endif // UTILITY_H
