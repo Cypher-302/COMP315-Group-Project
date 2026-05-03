@@ -405,11 +405,13 @@ void runOP(OrderProcessor& orderProcessor){
 		printRep(' ',' ',CENTER);
 		cout << "1. Display all queued orders" << endl;
 		printRep(' ',' ',CENTER);
-		cout << "2. Process orders" << endl;
+		cout << "2. Add new order into queue" << endl;
 		printRep(' ',' ',CENTER);
-		cout << "3. Receive new orders into queue" << endl;
+		cout << "3. Process orders" << endl;
 		printRep(' ',' ',CENTER);
-        cout << "4. View order history" << endl;
+		cout << "4. Simulate random orders" << endl;
+		printRep(' ',' ',CENTER);
+        cout << "5. View order history" << endl;
 		printRep(' ',' ',CENTER);
 		cout << "0. Back\n" << endl;
 		printRep(' ',' ',CENTER);
@@ -421,21 +423,14 @@ void runOP(OrderProcessor& orderProcessor){
 
 		switch(option)
 		{
-		    case 1:
+		    case 1: // display all queued orders
             {
                 orderProcessor.displayQueue();
                 pause(1000);
                 break;
             }
 
-            case 2:
-            {
-                orderProcessor.runSimulation();
-                pause(1000);
-                break;
-            }
-
-            case 3:
+            case 2: // add new order into queue
             {
                 printRep(' ',' ',CENTER);
                 cout << "====== NEW ORDER ENTRY ======" << endl;
@@ -462,7 +457,22 @@ void runOP(OrderProcessor& orderProcessor){
                 break;
             }
 
-            case 4:
+
+            case 3: // process orders
+            {
+                orderProcessor.processQueue();
+                pause(1000);
+                break;
+            }
+
+            case 4: // simulate random orders
+            {
+                orderProcessor.runSimulation();
+                pause(1000);
+                break;
+            }
+
+            case 5: // view order history
             {
                 orderProcessor.displayHistory();
                 pause(1000);
@@ -481,8 +491,6 @@ void runOP(OrderProcessor& orderProcessor){
             }
 		}
     } while(option != 0);
-
-
 }
 
 

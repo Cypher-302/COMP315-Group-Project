@@ -1,4 +1,5 @@
 #include "../include/OrderProcessor.h"
+#include "../include/Utility.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -7,6 +8,7 @@
 #include <thread>
 #include <ctime>
 #include <functional>
+#include <random>
 
 OrderProcessor::OrderProcessor(std::shared_ptr<InventoryManager> inv) : inventory(inv)
 {
@@ -35,8 +37,13 @@ OrderProcessor::~OrderProcessor()
 }
 
 void OrderProcessor::addOrder(std::shared_ptr<Order> order){
+     const int CENTER = 27;
+
+    std::cout << std::endl;
+
      // Validate that the order pointer is not null
     if (!order) {
+        Utility::printRep(' ', ' ', CENTER);
         std::cout << "Error: Cannot add null order to queue!" << std::endl;
         return;
     }
@@ -47,6 +54,7 @@ void OrderProcessor::addOrder(std::shared_ptr<Order> order){
     // Add the order to the back of the queue
     orderQueue.push(order);
 
+    Utility::printRep(' ', ' ', CENTER);
     std::cout << "Order #" << order->getOrderID()
               << " added to queue successfully." << std::endl;
 }
@@ -94,67 +102,96 @@ void OrderProcessor::displayQueue() {
     std::cout << "------------------------------------------------\n" << std::endl;
 }
 
-void OrderProcessor::processQueue(){
-
-    // Lock the queue mutex for the entire processing operation
-    // to prevent new orders being added while processing
-    std::lock_guard<std::mutex> queueLock (queueMutex);
-
-    if (orderQueue.empty())
+void OrderProcessor::processQueue()
+{
+    // check if the queue is empty before starting threads
     {
-        std::cout << "No orders in queue to process." << std::endl;
-        return;
-    }
+        // Lock the queue mutex for the entire processing operation
+        // to prevent new orders being added while processing
+        std::lock_guard<std::mutex> queueLock (queueMutex);
 
-    std::cout << "\nProcessing " << orderQueue.size() << " queued orders..." << std::endl;
-
-    //Keep track of the processing and processing status of the orders
-    int processed = 0;
-    int successful = 0;
-    int failed = 0;
-
-    // Process each order in the queue
-    while (!orderQueue.empty())
-    {
-        // Get the next order from the front of the queue
-        auto order = orderQueue.front();
-        orderQueue.pop();
-
-        if (!order)
+        if (orderQueue.empty())
         {
-            std::cout << "Warning: Skipping null order in queue." << std::endl;
-            continue;
+            std::cout << "No orders in queue to process." << std::endl;
+            return;
         }
 
-        // Attempt to fulfill the order using the inventory manager
-        bool success = inventory->processOrder(
-            order->getProductID(),
-            order->getQuantityRequested()
-        );
-
-        // Update order status based on fulfillment result
-        order->setOrderStatus(success);
-
-        // Add processed order to history (thread-safe)
-        {
-            std::lock_guard<std::mutex> historyLock(historyMutex);
-            orderHistory.push_back(order);
-        }
-
-        // Update counters
-        processed++;
-        if (success) successful++;
-        else failed++;
-
-        std::cout << "Order #" << order->getOrderID()
-                  << (success ? " - SUCCESS" : " - FAILED") << std::endl;
+        std::cout << "\nProcessing " << orderQueue.size()
+                    << " queued orders using " << NUM_THREADS
+                    << " threads..." << std::endl;
     }
 
-    // Display processing summary
+    // keep track of the processing and processing status of the orders
+    // using atomic counters so multiple threads can increment them safely
+    std::atomic<int> processed = 0;
+    std::atomic<int> successful = 0;
+    std::atomic<int> failed = 0;
+
+    // define worker logic that each thread will execute
+    // lambda function enables sharing local atomic variables and class members without defining new class method
+    auto queueWorker = [&]()
+    {
+        while (true)
+        {
+            std::shared_ptr<Order> order = nullptr;
+
+            // lock the queue only for time needed to pop an item
+            {
+                std::lock_guard<std::mutex> queueLock(queueMutex);
+                if (orderQueue.empty()) {
+                    break; // Queue is empty, exit this thread
+                }
+                order = orderQueue.front();
+                orderQueue.pop();
+            }
+
+            if (!order) continue; // skips if null
+
+            // process order
+            bool success = inventory->processOrder(
+                order->getProductID(),
+                order->getQuantityRequested()
+            );
+
+            order->setOrderStatus(success);
+
+            // safely update history, using mutex
+            {
+                std::lock_guard<std::mutex> historyLock(historyMutex);
+                orderHistory.push_back(order);
+            }
+
+            // safely update atomic counters
+            processed++;
+            if (success) successful++;
+            else failed++;
+        }
+    };
+
+    // spawn threads to process queue
+    std::vector<std::thread> queueThreads;
+    for (int i = 0; i < NUM_THREADS; i++)
+    {
+        queueThreads.emplace_back(queueWorker);
+    }
+
+    // wait for all threads to finish processing
+    for (auto& t : queueThreads)
+    {
+        if (t.joinable())
+        {
+            t.join();
+        }
+    }
+
+    // display processing summary
     std::cout << "\nQueue processing complete!" << std::endl;
-    std::cout << "Total processed: " << processed << std::endl;
-    std::cout << "Successful: " << successful << std::endl;
-    std::cout << "Failed: " << failed << std::endl;
+    std::cout << "Total processed: " << processed.load() << std::endl;
+    std::cout << "Successful: " << successful.load() << std::endl;
+    std::cout << "Failed: " << failed.load() << std::endl;
+
+    // check remaining (should always be 0)
+    std::lock_guard<std::mutex> finalLock(queueMutex);
     std::cout << "Remaining in queue: " << orderQueue.size() << "\n" << std::endl;
 }
 
@@ -210,18 +247,18 @@ void OrderProcessor::displayHistory()
 
 void OrderProcessor::threadWorkerFunc()
 {
-    // give each thread a random, unique seed for the random function
-    std::hash<std::thread::id> hasher;
-    std::srand(std::time(nullptr) + hasher(std::this_thread::get_id()));
+    thread_local std::mt19937 gen(std::hash<std::thread::id>{}(std::this_thread::get_id())); // give each thread a random, unique seed for the random function
 
     for(int i = 0; i < ORDERS_PER_THREAD; i++){
+        std::uniform_int_distribution<> distID(1, 15);
+        int randomProductId = distID(gen); // generates a random productID [1,15]
 
-        int randomProductId = 1 + rand() % 10; // generates a random productID [1,10]
 
         const int MIN_REQUEST_QUANTITY = -5; // effectively a restock
         const int MAX_REQUEST_QUANTITY = 15;
+        std::uniform_int_distribution<> distRequestQuantity(MIN_REQUEST_QUANTITY, MAX_REQUEST_QUANTITY);
 
-        int randomRequestedQuantity = MIN_REQUEST_QUANTITY + std::rand() % (MAX_REQUEST_QUANTITY - MIN_REQUEST_QUANTITY + 1);  // generates a random quantity [Min,Max]
+        int randomRequestedQuantity = distRequestQuantity(gen);  // generates a random quantity [Min,Max]
 
         if (randomRequestedQuantity == 0) randomRequestedQuantity = 1;
 

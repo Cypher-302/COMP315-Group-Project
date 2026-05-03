@@ -7,10 +7,6 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
-
-#include "../include/DiscountedProduct.h"
-#include "../include/TaxableProduct.h"
-
 #include <sstream>
 #include <thread>
 
@@ -259,6 +255,7 @@ bool InventoryManager::updateProduct(int productID, int newQuantity) {
     auto it = productMap.find(productID);
 
     if(it != productMap.end() && it->second) {
+        std::lock_guard<std::mutex> prodLock(it->second->getProductMutex()); // lock product before updating quantity
         it->second->setQuant((it->second->getQuant())+newQuantity);
         return true;
     }
