@@ -1,15 +1,15 @@
 Product#1#2L Milk#296#35
-TaxableProduct#2#T-Shirt#6#180#13.4
-Product#3#30 Pack Eggs#154#90
-DiscountedProduct#4#Sneakers#189#1375.5#15.6
-DiscountedProduct#5#Samsung A16#115#2780.99#10.95
-DiscountedProduct#6#MouseX17#299#115.99#8
+TaxableProduct#2#T-Shirt#238#180#13.4
+Product#3#30 Pack Eggs#157#90
+DiscountedProduct#4#Sneakers#181#1375.5#15.6
+DiscountedProduct#5#Samsung A16#101#2780.99#10.95
+DiscountedProduct#6#MouseX17#288#115.99#8
 TaxableProduct#7#Mouse#383#100.5#15
-TaxableProduct#8#Rolex#312#5600.5#15
-TaxableProduct#9#Soap#196#30.99#15
-TaxableProduct#10#Lindt Slab (100g)#531#100#15
-Product#11#2kg Rice#564#40
-Product#12#1kg Red Apples#53#25
-TaxableProduct#13#2L Pepsi#200#20#15
+TaxableProduct#8#Rolex#305#5600.5#15
+TaxableProduct#9#Soap#185#30.99#15
+TaxableProduct#10#Lindt Slab (100g)#523#100#15
+Product#11#2kg Rice#567#40
+Product#12#1kg Red Apples#43#25
+TaxableProduct#13#2L Pepsi#203#20#15
 TaxableProduct#14#2L Coke#180#28#15
-TaxableProduct#15#Ouma Rusks 1kg#40#110#15
+TaxableProduct#15#Ouma Rusks 1kg#45#110#15
