@@ -61,7 +61,7 @@ bool InventoryManager::removeProduct(int productId) {
     auto it = productMap.find(productId);
 
     if(it != productMap.end() && it->second) {
-        it->second->getActive() = true;
+        it->second->setActive(false);
         productMap.erase(it);
         return true;
     }
