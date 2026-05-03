@@ -1,5 +1,7 @@
+#ifndef ORDER_H
+#define ORDER_H
+
 #include <string>
-using namespace std;
 
 class Order {
 private:
@@ -69,3 +71,5 @@ public:
     bool getOrderStatus() const;
 
 };
+
+#endif // ORDER_H

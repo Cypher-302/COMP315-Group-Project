@@ -85,7 +85,7 @@ class InventoryManager
 
         /**
 
-          * Removes the Product using productID
+          * Removes the Product using product name
           * @param name
           * @return bool, true if removed, otherwise
 

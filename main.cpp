@@ -227,47 +227,52 @@ void runPM(std::shared_ptr<InventoryManager> manager){
                 cin.ignore(1000, '\n');
                 break;
             }
-
-           if(subOption == 1) {
-
-                manager->addNewProduct(make_shared<Product>(productName, productPrice, productID, productQuantity));
-
-            } else if(subOption == 2) {
-
+            bool success = false;
+            if(subOption == 1)
+            {
+                success = manager->addNewProduct(make_shared<Product>(productName, productPrice, productID, productQuantity));
+            } else if(subOption == 2)
+            {
                 double productDiscount;
                 printRep(' ',' ',CENTER);
                 cout << "Enter product discount: ";
                 cin >> productDiscount;
-                if (cin.fail()) {
-                printRep(' ',' ',CENTER);
-                cout << " Invalid input! Discount must be Numerical\n";
-                cin.clear();
-                cin.ignore(1000, '\n');
-                break;
+                if (cin.fail())
+                {
+                    printRep(' ',' ',CENTER);
+                    cout << " Invalid input! Discount must be Numerical\n";
+                    cin.clear();
+                    cin.ignore(1000, '\n');
+                    break;
                 }
-
-                manager->addNewProduct(make_shared<DiscountedProduct>(productName, productPrice, productID, productQuantity, productDiscount));
-
-            }else if(subOption == 3) {
-
+                success = manager->addNewProduct(make_shared<DiscountedProduct>(productName, productPrice, productID, productQuantity, productDiscount));
+            } else if(subOption == 3)
+            {
                 double productTax;
                 printRep(' ',' ',CENTER);cout << "Enter product tax: ";
                 cin >> productTax;
-                if (cin.fail()) {
-                printRep(' ',' ',CENTER);
-                cout << " Invalid input! Tax must be Numerical\n";
-                cin.clear();
-                cin.ignore(1000, '\n');
-                break;
+                if (cin.fail())
+                {
+                    printRep(' ',' ',CENTER);
+                    cout << " Invalid input! Tax must be Numerical\n";
+                    cin.clear();
+                    cin.ignore(1000, '\n');
+                    break;
                 }
+                success = manager->addNewProduct(make_shared<TaxableProduct>(productName, productPrice, productID, productQuantity,productTax));
+            }
 
-                manager->addNewProduct(make_shared<TaxableProduct>(productName, productPrice, productID, productQuantity,productTax));
-
-
-            cout<<"\n";
+            cout << endl;
             printRep(' ',' ',CENTER);
-			cout << "Product successfully added!\n" << endl; pause(1000);
-			}
+            if (success)
+            {
+                cout << "Product successfully added!\n" << endl;
+            } else
+            {
+                cout << "Failed to add product! ID may already exist.\n" << endl;
+            }
+            pause(1000);
+
 			break;
 		}
 

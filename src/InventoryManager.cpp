@@ -349,4 +349,25 @@ int InventoryManager::loadMap()
     return 0;
 }
 
+bool InventoryManager::removeProduct(const std::string &name)
+{
+    std::lock_guard<std::mutex> lock(mapMutex);
+
+    // using std::find_if
+    auto it = std::find_if(productMap.begin(), productMap.end(),[&name](const std::pair<const int, std::shared_ptr<Product>>& pair)
+                    {
+                        // check if the pointer is valid and the name matches
+                        return pair.second && pair.second->getName() == name;
+                    });
+
+    if (it != productMap.end())
+    {
+        it->second->setActive(false);
+        productMap.erase(it); // remove the product
+        return true;
+    }
+
+    return false; // product with that name not found
+}
+
 InventoryManager::~InventoryManager(){}
