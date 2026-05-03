@@ -47,6 +47,38 @@ void removeProduct(std::shared_ptr<InventoryManager> manager){
 
 }
 
+void showhelpPage(){
+    const int CENTER = 27;
+    printRep(' ',' ',CENTER);     cout <<"-----------------------------\n";
+    printRep(' ',' ',CENTER - 1); cout << "<| Nexus LogiQ Help Center |>\n";
+    printRep(' ',' ',CENTER);     cout <<"-----------------------------\n";
+
+    printRep(' ',' ',CENTER); cout << "========== HELP ==========\n" << endl;
+
+    printRep(' ',' ',CENTER); cout << "1. Product Management\n";
+    printRep(' ',' ',CENTER); cout << "   - Add, update, or remove products\n";
+    printRep(' ',' ',CENTER); cout << "   - View inventory details\n\n";
+
+    printRep(' ',' ',CENTER); cout << "2. Order Processing\n";
+    printRep(' ',' ',CENTER); cout << "   - Create and manage orders\n";
+    printRep(' ',' ',CENTER); cout << "   - Track order status\n\n";
+
+    printRep(' ',' ',CENTER); cout << "3. Navigation\n";
+    printRep(' ',' ',CENTER); cout << "   - Use menu numbers to select options\n";
+    printRep(' ',' ',CENTER); cout << "   - Enter -1 to exit the system\n\n";
+
+    printRep(' ',' ',CENTER); cout << "4. Need More Help?\n";
+    printRep(' ',' ',CENTER); cout << "   - Contact system admin\n";
+    printRep(' ',' ',CENTER); cout << "   - Check documentation folder\n";
+
+    printRep(' ',' ',CENTER); cout << "===========================\n\n";
+
+    printRep(' ',' ',CENTER); cout << "Press any key to return to menu...";
+
+    cin.ignore();
+    cin.get();
+}
+
 void getUpdate(std::shared_ptr<InventoryManager> manager){
     const int CENTER = 27;
     printRep(' ',' ',CENTER);
@@ -523,7 +555,8 @@ int main()
             }
             case 3:{
                 cout<<"\n";
-                printRep(' ',' ',CENTER); cout<< "Help currently unavailable. Sorry :0 :(\n";
+                //printRep(' ',' ',CENTER); cout<< "Help currently unavailable. Sorry :0 :(\n";
+                showhelpPage();
                 pause(1000);
                 break;
             }
