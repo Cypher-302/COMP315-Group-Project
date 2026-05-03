@@ -97,6 +97,7 @@ bool InventoryManager::displayAllProducts() const {
     std::lock_guard<std::mutex> lock(mapMutex);
 
     if(productMap.empty()) {
+        printRep(' ',' ',27);
         cout << "No products available";
         return false;
     }

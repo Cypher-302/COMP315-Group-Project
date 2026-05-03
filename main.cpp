@@ -14,7 +14,8 @@ using namespace std;
 using namespace Utility;
 
 void removeProduct(std::shared_ptr<InventoryManager> manager){
-    const int CENTER = 20;
+    const int CENTER = 27;
+    printRep(' ',' ',CENTER);
     cout << "====== PRODUCT SEARCH ======" << endl;
     printRep(' ',' ',CENTER);
 
@@ -25,6 +26,7 @@ void removeProduct(std::shared_ptr<InventoryManager> manager){
     printRep(' ',' ',CENTER);
     cout << "============================" << endl;
     if(manager->removeProduct(productID)){
+        printRep(' ',' ',CENTER);
         cout << "====== PRODUCT REMOVED ======" << endl;
         printRep(' ',' ',CENTER);
 
@@ -34,6 +36,7 @@ void removeProduct(std::shared_ptr<InventoryManager> manager){
         cout << "=============================" << endl;
         return;
     }
+        printRep(' ',' ',CENTER);
         cout << "====== PRODUCT NOT FOUND ======" << endl;
         printRep(' ',' ',CENTER);
 
@@ -45,9 +48,9 @@ void removeProduct(std::shared_ptr<InventoryManager> manager){
 }
 
 void getUpdate(std::shared_ptr<InventoryManager> manager){
-    const int CENTER = 20;
+    const int CENTER = 27;
     printRep(' ',' ',CENTER);
-    cout << "========== Search / Update Product ==========" << endl;
+    cout << "==============  Update Product =============" << endl;
 
 
     printRep(' ',' ',CENTER);
@@ -55,17 +58,32 @@ void getUpdate(std::shared_ptr<InventoryManager> manager){
 
     int productID;
     cin >> productID;
+    if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << " Invalid input! ID must be Numerical\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+                return;
+    }
 
     printRep(' ',' ',CENTER);
     cout << "Enter Quantity: ";
 
     int quant;
     cin >> quant;
+    if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << " Invalid input! Quantity must be Numerical\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+                return;
+    }
 
     manager->updateProduct(productID, quant);
     printRep(' ',' ',CENTER);
-
     cout << "Product Updated" << endl;
+    printRep(' ',' ',CENTER);
+
     cout << "============================================" << endl;
 }
 
@@ -97,7 +115,11 @@ void runPM(std::shared_ptr<InventoryManager> manager){
 		cout << "Select option: ";
 
 		cin >> option ;
-
+        if (cin.fail()) {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+        }
 
 		switch(option) {
 
@@ -119,28 +141,62 @@ void runPM(std::shared_ptr<InventoryManager> manager){
             cout << "Select option: ";
 
             cin >> subOption;
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+            }
 
 			string  productName;
 			double productPrice;
 			int productID,productQuantity;
 
+
             printRep(' ',' ',CENTER);
 			cout << "Enter the product ID: ";
 			cin >> productID;
+            if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << " Invalid input! ID must be Numerical\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+            }
 
             printRep(' ',' ',CENTER);
 			cout << "Enter the product name: ";
 			cin >> productName;
-
+            if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << " Invalid input! Name must use only allowed characters\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+            }
             printRep(' ',' ',CENTER);
 			cout << "Enter the product price: ";
 			cin >> productPrice;
+            if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << " Invalid input! Price must be Numerical\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+            }
+
 
             printRep(' ',' ',CENTER);
 			cout << "Enter the product quantity: ";
 			cin >> productQuantity;
+			if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << " Invalid input! Quantity must be Numerical\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+            }
 
-            if(subOption == 1) {
+           if(subOption == 1) {
 
                 manager->addNewProduct(make_shared<Product>(productName, productPrice, productID, productQuantity));
 
@@ -150,6 +206,13 @@ void runPM(std::shared_ptr<InventoryManager> manager){
                 printRep(' ',' ',CENTER);
                 cout << "Enter product discount: ";
                 cin >> productDiscount;
+                if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << " Invalid input! Discount must be Numerical\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+                }
 
                 manager->addNewProduct(make_shared<DiscountedProduct>(productName, productPrice, productID, productQuantity, productDiscount));
 
@@ -158,13 +221,21 @@ void runPM(std::shared_ptr<InventoryManager> manager){
                 double productTax;
                 printRep(' ',' ',CENTER);cout << "Enter product tax: ";
                 cin >> productTax;
+                if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << " Invalid input! Tax must be Numerical\n";
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+                }
 
                 manager->addNewProduct(make_shared<TaxableProduct>(productName, productPrice, productID, productQuantity,productTax));
-            }
+
 
             cout<<"\n";
             printRep(' ',' ',CENTER);
 			cout << "Product successfully added!\n" << endl; pause(1000);
+			}
 			break;
 		}
 
@@ -175,10 +246,19 @@ void runPM(std::shared_ptr<InventoryManager> manager){
 			printRep(' ',' ',CENTER);
             cout << "Enter ID of the product you want to remove: ";
             cin >> productID;
+            if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << "Operation failed" << endl;
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+            }
 
             if(manager->removeProduct(productID)) {
+                printRep(' ',' ',CENTER);
                 cout << "Product successfully removed!" << endl;
             } else {
+                printRep(' ',' ',CENTER);
                 cout << "Operation failed" << endl;
             }
 
@@ -198,6 +278,13 @@ void runPM(std::shared_ptr<InventoryManager> manager){
 			printRep(' ',' ',CENTER);
 			cout << "Enter the ID of the product you are looking for: ";
 			cin >> productID;
+            if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << "Operation failed" << endl;
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+            }
 
             cout<<"\n";
 			printRep(' ',' ',CENTER);
@@ -219,6 +306,14 @@ void runPM(std::shared_ptr<InventoryManager> manager){
             cout << "Select option: ";
 
             cin >> subOption;
+            if (cin.fail()) {
+                printRep(' ',' ',CENTER);
+                cout << "Operation failed" << endl;
+                cin.clear();
+                cin.ignore(1000, '\n');
+                break;
+            }
+
             if(subOption==1){
                 manager->sortAndDisplayProductByPrice();
             }else if(subOption==2){
@@ -236,7 +331,7 @@ void runPM(std::shared_ptr<InventoryManager> manager){
                 break;
 		    }
 
-                        printRep(' ', ' ', CENTER);
+            printRep(' ', ' ', CENTER);
             cout << "============================" << endl;
 
             printRep(' ', ' ', CENTER);
@@ -311,7 +406,7 @@ void runOP(OrderProcessor& orderProcessor){
             case 3:
             {
                 printRep(' ',' ',CENTER);
-                cout << "\n====== NEW ORDER ENTRY ======" << endl;
+                cout << "====== NEW ORDER ENTRY ======" << endl;
 
                 int prodID, quantity;
                 static int nextOrderID = 1000; // Start manual order IDs from 1000
@@ -330,7 +425,7 @@ void runOP(OrderProcessor& orderProcessor){
                 // Add to queue
                 orderProcessor.addOrder(newOrder);
                 printRep(' ',' ',CENTER);
-                cout << "\nOrder queued! Use 'Process orders' to fulfill it." << endl;
+                cout << "Order queued! Use 'Process orders' to fulfill it." << endl;
                 pause(1000);
                 break;
             }

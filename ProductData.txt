@@ -1,0 +1,10 @@
+Product#1#2L Milk#296#35
+TaxableProduct#2#T-Shirt#6#180#13.4
+Product#3#30 Pack Eggs#154#90
+DiscountedProduct#4#Sneakers#189#1375.5#15.6
+DiscountedProduct#5#Samsung A16#115#2780.99#10.95
+DiscountedProduct#6#MouseX17#299#115.99#8
+TaxableProduct#7#Mouse#383#100.5#15
+TaxableProduct#8#Rolex#312#5600.5#15
+TaxableProduct#9#Soap#196#30.99#15
+TaxableProduct#10#Lindt Slab (100g)#531#100#15
