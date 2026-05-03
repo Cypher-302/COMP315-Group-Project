@@ -75,11 +75,11 @@ namespace Utility
         }
 
         // resize command
-        std::cout << "\x1b[8;30;128t";
+        std::cout << "\x1b[8;30;136t";
     #else
         // this code runs on Linux, macOS, etc.
         std::cout << "Non-Windows system detected. Using standard resize." << std::endl;
-        std::cout << "\e[8;30;128t";
+        std::cout << "\e[8;30;136t";
     #endif
     }
 }

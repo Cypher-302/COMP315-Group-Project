@@ -34,11 +34,11 @@ std::mutex& Product::getProductMutex() const
     return productMutex;
 }
 
-std::atomic<bool> Product::getActive() const {
-    return active;
+bool Product::getActive() const {
+    return active.load(); // safely reads and returns the boolean value
 }
-void Product::setActive(std::atomic<bool> active){
-    active = true;
+void Product::setActive(bool isActive){
+    active.store(isActive); // safely sets the atomic variable to the new boolean value
 }
 
 void Product::setName(std::string the_name){

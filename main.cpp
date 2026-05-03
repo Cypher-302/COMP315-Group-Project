@@ -488,7 +488,7 @@ void runOP(OrderProcessor& orderProcessor){
 
 int main()
 {
-    // resizes the window to 128 cols and 30 rows to fit our console output
+    // resizes the window to 136 cols and 30 rows to fit our console output
     setupTerminal();
 
     int option;

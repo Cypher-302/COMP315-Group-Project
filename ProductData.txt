@@ -12,4 +12,4 @@ Product#11#2kg Rice#564#40
 Product#12#1kg Red Apples#53#25
 TaxableProduct#13#2L Pepsi#200#20#15
 TaxableProduct#14#2L Coke#180#28#15
-TaxableProduct#15#Ouma Chunky Buttermilk Rusks 1kg#40#110#15
+TaxableProduct#15#Ouma Rusks 1kg#40#110#15

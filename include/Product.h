@@ -61,15 +61,15 @@ public:
 
     /**
         Returns wheteher a product is still valid.
-        @return active 
+        @return active
      */
-    std::atomic<bool> getActive() const;
+    bool getActive() const;
 
     /**
-        set the status of the product to true 
-        @param active 
+        set the status of the product to the passed in value
+        @param active
      */
-    void setActive(std::atomic<bool> active);
+    void setActive(bool isActive);
 
     /**
         Updates the name of this product
